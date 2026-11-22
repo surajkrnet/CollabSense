@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="100%" height="auto" role="img" aria-label="CollabSense Multi-Tier AI Router and Deterministic Math Boundary">
+  <rect width="1200" height="320" rx="12" fill="#F4F1EA" stroke="#1D1F23" stroke-width="2" />
+
+  <text x="32" y="40" font-family="ui-sans-serif, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#1D1F23">Low-Latency Multi-Model Routing &amp; Deterministic Math Boundary</text>
+  <text x="32" y="62" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" fill="#68645D">Strict wall-clock asyncio.wait_for guards + per-model HTTP 429 cooldown isolation + pure-Python scoring</text>
+
+  <!-- Left Box: 3-Tier AI Routing Engine -->
+  <g transform="translate(32, 82)">
+    <rect width="740" height="214" rx="10" fill="#FAF8F3" stroke="#1D1F23" stroke-width="1.5" />
+    <rect x="0" y="0" width="740" height="36" rx="10" fill="#1D1F23" />
+    <text x="18" y="23" font-family="ui-monospace, monospace" font-size="12" font-weight="700" fill="#FFC526">QUALITATIVE AI SYNTHESIS ENGINE (openrouter_service.py)</text>
+    <text x="520" y="23" font-family="ui-monospace, monospace" font-size="11" fill="#FAF8F3">OpenRouter Guard: :free ONLY</text>
+
+    <!-- Heavy Tier -->
+    <rect x="16" y="48" width="708" height="48" rx="6" fill="#F4F1EA" stroke="#D8D3C8" />
+    <rect x="26" y="58" width="84" height="26" rx="4" fill="#B91C1C" />
+    <text x="38" y="75" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#FAF8F3">HEAVY TIER</text>
+    <text x="122" y="68" font-family="ui-sans-serif, sans-serif" font-size="12" font-weight="700" fill="#1D1F23">Home Co-Pilot · Stage 6 Initial PRD · Stage 8 Loop Comms</text>
+    <text x="122" y="86" font-family="ui-monospace, monospace" font-size="11" fill="#45423D">1. NIM kimi-k3.1-pro (7.5s cap) → 2. NIM nemotron-3.5-super-vl-120b → 3. OR Super VL / Lightning :free</text>
+
+    <!-- Cluster Tier -->
+    <rect x="16" y="104" width="708" height="48" rx="6" fill="#F4F1EA" stroke="#D8D3C8" />
+    <rect x="26" y="114" width="84" height="26" rx="4" fill="#E8920D" />
+    <text x="32" y="131" font-family="ui-monospace, monospace" font-size="10.5" font-weight="700" fill="#1D1F23">CLUSTER TIER</text>
+    <text x="122" y="124" font-family="ui-sans-serif, sans-serif" font-size="12" font-weight="700" fill="#1D1F23">Stage 3 &amp; 4 Semantic Clustering · Stage 6 Interactive PRD Chat (/api/v1/prd/chat)</text>
+    <text x="122" y="142" font-family="ui-monospace, monospace" font-size="11" fill="#45423D">1. NIM nemotron-3.5-super-vl-120b → 2. NIM/OR nemotron-3.5-lightning (~5s) → 3. OR Ultra 550B / Gemma 4 :free</text>
+
+    <!-- Light Tier -->
+    <rect x="16" y="160" width="708" height="44" rx="6" fill="#F4F1EA" stroke="#D8D3C8" />
+    <rect x="26" y="169" width="84" height="26" rx="4" fill="#1D7A4C" />
+    <text x="36" y="186" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#FAF8F3">LIGHT TIER</text>
+    <text x="122" y="179" font-family="ui-sans-serif, sans-serif" font-size="12" font-weight="700" fill="#1D1F23">Stage 2 Parallel 25-Row Noise Chunks · Stage 3 Map-Reduce Pass 2 · Stage 7 Telemetry</text>
+    <text x="122" y="196" font-family="ui-monospace, monospace" font-size="11" fill="#45423D">1. NIM nemotron-3.5-super-vl-120b (3.7s) → 2. NIM/OR nemotron-3.5-lightning → 3. Gemma 4 / Ling Flash :free</text>
+  </g>
+
+  <!-- Right Box: Deterministic Math Boundary -->
+  <g transform="translate(792, 82)">
+    <rect width="376" height="214" rx="10" fill="#FAF8F3" stroke="#1D7A4C" stroke-width="2" />
+    <rect x="0" y="0" width="376" height="36" rx="10" fill="#1D7A4C" />
+    <text x="18" y="23" font-family="ui-monospace, monospace" font-size="12" font-weight="700" fill="#FAF8F3">DETERMINISTIC MATH BOUNDARY (0% LLM)</text>
+
+    <text x="18" y="60" font-family="ui-monospace, monospace" font-size="11.5" font-weight="700" fill="#1D1F23">RICE = (Reach × Impact × Conf) / max(Effort, 0.1)</text>
+    <text x="18" y="84" font-family="ui-monospace, monospace" font-size="11.5" font-weight="700" fill="#1D1F23">WSJF = Cost_of_Delay / max(Duration, 1)</text>
+    <text x="18" y="108" font-family="ui-monospace, monospace" font-size="11.5" font-weight="700" fill="#1D1F23">ICE  = (Impact_10 × Conf_10 × Ease) / 10</text>
+
+    <line x1="18" y1="122" x2="358" y2="122" stroke="#D8D3C8" stroke-width="1.5" />
+
+    <text x="18" y="144" font-family="ui-sans-serif, sans-serif" font-size="12" font-weight="700" fill="#1D7A4C">✓ Anti-Hallucination Guards Enforced:</text>
+    <text x="18" y="164" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Strips any unverified / invented ticket citation IDs</text>
+    <text x="18" y="182" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Never invents $0 ARR when revenue column is absent</text>
+    <text x="18" y="200" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• 60fps client sliders match Python backend to 0.01</text>
+  </g>
+</svg>

@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 580" width="100%" height="auto" role="img" aria-label="CollabSense v4.1 Autonomous Product Strategy OS Preview">
+  <defs>
+    <pattern id="dotGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#D8D3C8" />
+    </pattern>
+    <filter id="cardShadow" x="-2%" y="-2%" width="104%" height="106%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#1D1F23" flood-opacity="0.07" />
+    </filter>
+  </defs>
+
+  <!-- Warm Cream Sketchbook Canvas -->
+  <rect width="1200" height="580" rx="14" fill="#F4F1EA" stroke="#1D1F23" stroke-width="2" />
+  <rect width="1196" height="576" x="2" y="2" rx="12" fill="url(#dotGrid)" />
+
+  <!-- Top OS Window Bar -->
+  <rect x="2" y="2" width="1196" height="56" rx="12" fill="#FAF8F3" />
+  <line x1="2" y1="58" x2="1198" y2="58" stroke="#D8D3C8" stroke-width="1.5" />
+
+  <!-- Window Controls -->
+  <circle cx="26" cy="30" r="6" fill="#E57373" stroke="#1D1F23" stroke-width="1.2" />
+  <circle cx="46" cy="30" r="6" fill="#FFD54F" stroke="#1D1F23" stroke-width="1.2" />
+  <circle cx="66" cy="30" r="6" fill="#81C784" stroke="#1D1F23" stroke-width="1.2" />
+
+  <!-- Brand Mark Isometric Blocks -->
+  <g transform="translate(92, 16)">
+    <polygon points="0,26 0,6 10,12 10,26" fill="#A09A8E" stroke="#1D1F23" stroke-width="1.5" />
+    <polygon points="10,26 10,4 20,10 20,26" fill="#C87A19" stroke="#1D1F23" stroke-width="1.5" />
+    <polygon points="20,26 20,2 30,8 30,26" fill="#E8920D" stroke="#1D1F23" stroke-width="1.5" />
+    <polygon points="30,26 30,10 42,26" fill="#1D1F23" stroke="#1D1F23" stroke-width="1.5" />
+    <circle cx="35" cy="21" r="1.4" fill="#FAF8F3" />
+  </g>
+
+  <text x="146" y="35" font-family="ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="800" fill="#1D1F23">CollabSense</text>
+  <text x="262" y="35" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" font-weight="600" fill="#68645D">v4.1.0 · Autonomous Product Discovery &amp; Spec OS</text>
+
+  <!-- Top Right Status Pills -->
+  <rect x="752" y="16" width="218" height="28" rx="6" fill="#E7F4EC" stroke="#1D7A4C" stroke-width="1.2" />
+  <circle cx="768" cy="30" r="4" fill="#1D7A4C" />
+  <text x="780" y="34" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11.5" font-weight="700" fill="#1D7A4C">LIVE: collabsense.vercel.app</text>
+
+  <rect x="980" y="16" width="198" height="28" rx="6" fill="#1D1F23" />
+  <text x="994" y="34" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11.5" font-weight="700" fill="#FFC526">0.00% LLM Math Drift</text>
+
+  <!-- Left Navigation Sidebar -->
+  <rect x="18" y="74" width="232" height="488" rx="10" fill="#FAF8F3" stroke="#D8D3C8" stroke-width="1.5" filter="url(#cardShadow)" />
+  <text x="34" y="100" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="10.5" font-weight="700" fill="#68645D" letter-spacing="0.8">8-STAGE PRODUCT WORKFLOW</text>
+
+  <!-- Sidebar Items -->
+  <g font-family="ui-sans-serif, -apple-system, sans-serif" font-size="12.5" font-weight="600">
+    <rect x="28" y="112" width="212" height="32" rx="6" fill="#EFECE3" stroke="#D8D3C8" />
+    <text x="42" y="132" fill="#1D1F23">00 · Home AI Co-Pilot</text>
+    <text x="202" y="132" font-family="ui-monospace, monospace" font-size="10.5" fill="#1D7A4C">&lt;8s</text>
+
+    <rect x="28" y="150" width="212" height="32" rx="6" fill="#FAF8F3" />
+    <text x="42" y="170" fill="#45423D">S1 · Upload Data (RFC-4180)</text>
+    <rect x="198" y="157" width="34" height="18" rx="4" fill="#EFECE3" />
+    <text x="205" y="170" font-family="ui-monospace, monospace" font-size="10.5" fill="#1D1F23">250</text>
+
+    <rect x="28" y="186" width="212" height="32" rx="6" fill="#FAF8F3" />
+    <text x="42" y="206" fill="#45423D">S2 · Noise &amp; Enrichment</text>
+    <text x="196" y="206" font-family="ui-monospace, monospace" font-size="10.5" fill="#1D7A4C">100%</text>
+
+    <rect x="28" y="222" width="212" height="32" rx="6" fill="#FFF7E6" stroke="#E8920D" stroke-width="1.5" />
+    <text x="42" y="242" fill="#1D1F23" font-weight="700">S3 · Intent &amp; Clusters</text>
+    <text x="195" y="242" font-family="ui-monospace, monospace" font-size="10.5" fill="#C87A19">P0-P4</text>
+
+    <rect x="28" y="258" width="212" height="32" rx="6" fill="#FAF8F3" />
+    <text x="42" y="278" fill="#45423D">S4 · Root Cause &amp; Triage</text>
+
+    <rect x="28" y="294" width="212" height="32" rx="6" fill="#FAF8F3" />
+    <text x="42" y="314" fill="#45423D">S5 · Prioritization Stack</text>
+
+    <rect x="28" y="330" width="212" height="32" rx="6" fill="#FFF7E6" stroke="#E8920D" stroke-width="1.5" />
+    <text x="42" y="350" fill="#1D1F23" font-weight="700">S6 · AI PRD Drafting Studio</text>
+    <text x="202" y="350" font-family="ui-monospace, monospace" font-size="10.5" fill="#C87A19">LIVE</text>
+
+    <rect x="28" y="366" width="212" height="32" rx="6" fill="#FAF8F3" />
+    <text x="42" y="386" fill="#45423D">S7 · Release Analytics Board</text>
+
+    <rect x="28" y="402" width="212" height="32" rx="6" fill="#FAF8F3" />
+    <text x="42" y="422" fill="#45423D">S8 · Loop Closure &amp; Comms</text>
+  </g>
+
+  <!-- Sidebar Footer Badge -->
+  <rect x="30" y="498" width="208" height="50" rx="8" fill="#1D1F23" />
+  <text x="44" y="519" font-family="ui-monospace, monospace" font-size="10.5" font-weight="700" fill="#FFC526">MULTI-MODEL AI ROUTER</text>
+  <text x="44" y="536" font-family="ui-monospace, monospace" font-size="10" fill="#FAF8F3">NVIDIA NIM + OpenRouter :free</text>
+
+  <!-- Main Workspace Area: Top Card = S3/S4 P0-P4 Severity Hierarchy Card -->
+  <rect x="266" y="74" width="916" height="224" rx="10" fill="#FAF8F3" stroke="#D8D3C8" stroke-width="1.5" filter="url(#cardShadow)" />
+  <!-- Left P0 Accent Border -->
+  <rect x="266" y="74" width="6" height="224" rx="3" fill="#B91C1C" />
+
+  <!-- Card Header Row -->
+  <rect x="288" y="90" width="142" height="24" rx="5" fill="#FDECEC" stroke="#B91C1C" stroke-width="1.2" />
+  <text x="298" y="106" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#B91C1C">P0 · Critical Blocker</text>
+
+  <text x="442" y="106" font-family="ui-monospace, monospace" font-size="12" font-weight="700" fill="#C87A19">CLU-01</text>
+
+  <rect x="498" y="90" width="154" height="24" rx="5" fill="#EFECE3" stroke="#D8D3C8" />
+  <text x="510" y="106" font-family="ui-sans-serif, sans-serif" font-size="11" font-weight="600" fill="#1D1F23">Security &amp; Compliance</text>
+
+  <rect x="662" y="90" width="118" height="24" rx="5" fill="#EFECE3" stroke="#D8D3C8" />
+  <text x="674" y="106" font-family="ui-sans-serif, sans-serif" font-size="11" font-weight="600" fill="#45423D">Identity &amp; RBAC</text>
+
+  <!-- Triage Status & Deterministic Scores -->
+  <rect x="854" y="88" width="144" height="26" rx="6" fill="#1D7A4C" />
+  <text x="870" y="105" font-family="ui-sans-serif, sans-serif" font-size="11.5" font-weight="700" fill="#FAF8F3">✓ Ready for Roadmap</text>
+
+  <rect x="1008" y="88" width="76" height="26" rx="6" fill="#EFECE3" stroke="#C87A19" stroke-width="1.2" />
+  <text x="1018" y="105" font-family="ui-monospace, monospace" font-size="11.5" font-weight="700" fill="#1D1F23">RICE 110.2</text>
+
+  <rect x="1092" y="88" width="74" height="26" rx="6" fill="#EFECE3" stroke="#D8D3C8" />
+  <text x="1101" y="105" font-family="ui-monospace, monospace" font-size="11.5" font-weight="700" fill="#1D7A4C">$818k ARR</text>
+
+  <!-- Cluster Title & Root Cause -->
+  <text x="288" y="138" font-family="ui-sans-serif, -apple-system, sans-serif" font-size="17" font-weight="800" fill="#1D1F23">Enterprise SAML 2.0 SSO &amp; Okta SCIM Group Provisioning</text>
+
+  <rect x="288" y="150" width="876" height="54" rx="6" fill="#F4F1EA" stroke="#D8D3C8" />
+  <text x="302" y="170" font-family="ui-sans-serif, sans-serif" font-size="11.5" font-weight="700" fill="#C87A19">Root Cause Synthesis ·</text>
+  <text x="434" y="170" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#1D1F23">IdP audience URI validation mismatch on multi-domain SAML assertions combined with async JWT</text>
+  <text x="302" y="190" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#1D1F23">revocation lag during SCIM deprovisioning. Persona: Enterprise Security Admin · Churn Risk: Critical · Owner: Identity Platform</text>
+
+  <!-- Top-3+N Verified Citations Bar -->
+  <rect x="288" y="216" width="146" height="24" rx="5" fill="#E7F4EC" stroke="#1D7A4C" />
+  <text x="298" y="232" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#1D7A4C">Verified citations (8)</text>
+
+  <rect x="444" y="216" width="72" height="24" rx="5" fill="#FAF8F3" stroke="#D8D3C8" />
+  <text x="454" y="232" font-family="ui-monospace, monospace" font-size="11" font-weight="600" fill="#1D1F23">[TCK-101]</text>
+
+  <rect x="524" y="216" width="72" height="24" rx="5" fill="#FAF8F3" stroke="#D8D3C8" />
+  <text x="534" y="232" font-family="ui-monospace, monospace" font-size="11" font-weight="600" fill="#1D1F23">[TCK-102]</text>
+
+  <rect x="604" y="216" width="72" height="24" rx="5" fill="#FAF8F3" stroke="#D8D3C8" />
+  <text x="614" y="232" font-family="ui-monospace, monospace" font-size="11" font-weight="600" fill="#1D1F23">[TCK-103]</text>
+
+  <rect x="684" y="216" width="78" height="24" rx="5" fill="#EFECE3" stroke="#C87A19" stroke-width="1.2" />
+  <text x="696" y="232" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#C87A19">+5 more ▾</text>
+
+  <!-- Secondary P1 Hierarchy Preview Strip -->
+  <rect x="288" y="252" width="876" height="34" rx="6" fill="#F4F1EA" stroke="#D8D3C8" />
+  <rect x="296" y="258" width="118" height="22" rx="4" fill="#FAF8F3" stroke="#E8920D" />
+  <text x="304" y="273" font-family="ui-monospace, monospace" font-size="10.5" font-weight="700" fill="#C87A19">P1 · High Priority</text>
+  <text x="426" y="273" font-family="ui-sans-serif, sans-serif" font-size="12" font-weight="700" fill="#1D1F23">CLU-02 · Async Chunked CSV &amp; High-Burst Webhook Ingestion Pipeline</text>
+  <text x="980" y="273" font-family="ui-monospace, monospace" font-size="11" font-weight="600" fill="#68645D">[TCK-109] [TCK-111] [TCK-112] +4 more</text>
+
+  <!-- Bottom Split Section: Stage 6 AI PRD Co-Pilot (Left) + Live PRD Diff Viewer (Right) -->
+  <!-- Left Pane: AI PRD Assistant -->
+  <rect x="266" y="312" width="424" height="250" rx="10" fill="#FAF8F3" stroke="#D8D3C8" stroke-width="1.5" filter="url(#cardShadow)" />
+  <rect x="266" y="312" width="424" height="36" rx="10" fill="#EFECE3" />
+  <text x="284" y="335" font-family="ui-sans-serif, sans-serif" font-size="13" font-weight="800" fill="#1D1F23">Stage 6 · AI PRD Drafting Assistant</text>
+  <rect x="562" y="320" width="114" height="20" rx="4" fill="#FFF7E6" stroke="#E8920D" />
+  <text x="572" y="334" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#C87A19">Live Spec Sync</text>
+
+  <!-- Chat Messages -->
+  <rect x="282" y="360" width="392" height="46" rx="6" fill="#EFECE3" stroke="#D8D3C8" />
+  <text x="294" y="377" font-family="ui-sans-serif, sans-serif" font-size="11" font-weight="700" fill="#1D1F23">You (Staff PM)</text>
+  <text x="294" y="395" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">"Add SOC2 audit logging edge cases &amp; &lt;400ms p95 latency SLA"</text>
+
+  <rect x="282" y="414" width="392" height="92" rx="6" fill="#FAF8F3" stroke="#C87A19" stroke-width="1.2" />
+  <text x="294" y="432" font-family="ui-sans-serif, sans-serif" font-size="11" font-weight="700" fill="#C87A19">PRD Co-Pilot</text>
+  <text x="510" y="432" font-family="ui-monospace, monospace" font-size="10" fill="#68645D">nemotron-3.5-super-vl · 3.8s</text>
+  <text x="294" y="451" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#1D1F23">Updated Gherkin AC-03 and Defensive Edge Cases with immutable</text>
+  <text x="294" y="468" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#1D1F23">SOC2 audit trail triggers and &lt;400ms p95 assertion SLA.</text>
+  <rect x="294" y="478" width="158" height="20" rx="4" fill="#E7F4EC" stroke="#1D7A4C" />
+  <text x="302" y="492" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#1D7A4C">Updated: user_stories</text>
+  <rect x="460" y="478" width="186" height="20" rx="4" fill="#E7F4EC" stroke="#1D7A4C" />
+  <text x="468" y="492" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#1D7A4C">Updated: defensive_edge_cases</text>
+
+  <!-- Input Bar -->
+  <rect x="282" y="516" width="318" height="32" rx="6" fill="#F4F1EA" stroke="#D8D3C8" />
+  <text x="294" y="536" font-family="ui-sans-serif, sans-serif" font-size="11" fill="#68645D">Tell AI what to add, rewrite, or constrain…</text>
+  <rect x="608" y="516" width="66" height="32" rx="6" fill="#E8920D" stroke="#1D1F23" stroke-width="1.2" />
+  <text x="625" y="536" font-family="ui-sans-serif, sans-serif" font-size="11.5" font-weight="700" fill="#1D1F23">Apply</text>
+
+  <!-- Right Pane: Live PRD Viewer -->
+  <rect x="704" y="312" width="478" height="250" rx="10" fill="#FAF8F3" stroke="#D8D3C8" stroke-width="1.5" filter="url(#cardShadow)" />
+  <rect x="704" y="312" width="478" height="36" rx="10" fill="#EFECE3" />
+  <text x="722" y="335" font-family="ui-sans-serif, sans-serif" font-size="13" font-weight="800" fill="#1D1F23">Live PRD Viewer · PRD-CLU-01.md</text>
+  <rect x="1032" y="320" width="136" height="20" rx="4" fill="#E7F4EC" stroke="#1D7A4C" />
+  <text x="1042" y="334" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#1D7A4C">2 sections updated</text>
+
+  <!-- Highlighted Gherkin Section -->
+  <rect x="720" y="360" width="446" height="114" rx="8" fill="#1D1F23" stroke="#E8920D" stroke-width="2" />
+  <text x="734" y="381" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#FFC526">AC-01: Multi-Domain SAML Assertion &amp; Sub-400ms SLA</text>
+  <rect x="1096" y="367" width="58" height="18" rx="4" fill="#1D7A4C" />
+  <text x="1104" y="380" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#FAF8F3">UPDATED</text>
+  <text x="734" y="403" font-family="ui-monospace, monospace" font-size="11" fill="#FAF8F3"><tspan fill="#81C784" font-weight="700">Given</tspan> an Enterprise tenant logs in via secondary Okta IdP domain</text>
+  <text x="734" y="423" font-family="ui-monospace, monospace" font-size="11" fill="#FAF8F3"><tspan fill="#64B5F6" font-weight="700">When</tspan> FastAPI validates the SAML 2.0 assertion &amp; SCIM group claims</text>
+  <text x="734" y="443" font-family="ui-monospace, monospace" font-size="11" fill="#FAF8F3"><tspan fill="#FFD54F" font-weight="700">Then</tspan> RBAC roles hydrate in &lt;400ms p95 &amp; emit immutable SOC2</text>
+  <text x="734" y="460" font-family="ui-monospace, monospace" font-size="11" fill="#FAF8F3">     audit event collabsense_clu_01_executed under Supabase RLS</text>
+
+  <!-- Highlighted Defensive Edge Case -->
+  <rect x="720" y="484" width="446" height="64" rx="8" fill="#FAF8F3" stroke="#E8920D" stroke-width="2" />
+  <text x="734" y="504" font-family="ui-sans-serif, sans-serif" font-size="11.5" font-weight="700" fill="#1D1F23">4. Defensive Edge Cases &amp; Failure Modes</text>
+  <rect x="1096" y="490" width="58" height="18" rx="4" fill="#1D7A4C" />
+  <text x="1104" y="503" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#FAF8F3">UPDATED</text>
+  <text x="734" y="524" font-family="ui-sans-serif, sans-serif" font-size="11" fill="#45423D">• Enforce strict rate-limiting &amp; replay-attack nonce check on SAML ACS callbacks.</text>
+  <text x="734" y="540" font-family="ui-sans-serif, sans-serif" font-size="11" fill="#45423D">• Revoke active JWTs within &lt;60s on Okta SCIM user deprovisioning webhook.</text>
+</svg>

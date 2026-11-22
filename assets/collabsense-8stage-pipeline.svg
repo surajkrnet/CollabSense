@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 350" width="100%" height="auto" role="img" aria-label="CollabSense 8-Stage Autonomous Product Discovery Pipeline">
+  <rect width="1200" height="350" rx="12" fill="#F4F1EA" stroke="#1D1F23" stroke-width="2" />
+
+  <text x="32" y="40" font-family="ui-sans-serif, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#1D1F23">End-to-End 8-Stage Autonomous Product Discovery &amp; Triage Pipeline</text>
+  <text x="32" y="62" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" fill="#68645D">Every stage enforces anti-hallucination ticket citation verification and deterministic scoring math</text>
+
+  <!-- Row 1: Stages 1 to 4 -->
+  <!-- Stage 1 -->
+  <g transform="translate(32, 84)">
+    <rect width="262" height="110" rx="8" fill="#FAF8F3" stroke="#1D1F23" stroke-width="1.5" />
+    <rect x="12" y="12" width="42" height="22" rx="4" fill="#1D1F23" />
+    <text x="23" y="27" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#FFC526">S1</text>
+    <text x="64" y="28" font-family="ui-sans-serif, sans-serif" font-size="13.5" font-weight="800" fill="#1D1F23">Upload &amp; Normalize</text>
+    <text x="14" y="52" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• RFC-4180 multi-line CSV/TSV parser</text>
+    <text x="14" y="70" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Up to 2,000 rows (100% row capture)</text>
+    <text x="14" y="88" font-family="ui-monospace, monospace" font-size="10.5" font-weight="600" fill="#1D7A4C">✓ Formula-Injection Guard (=,+,-,@)</text>
+  </g>
+
+  <!-- Arrow 1->2 -->
+  <path d="M 298 139 L 316 139" stroke="#C87A19" stroke-width="2.5" marker-end="url(#arrow)" />
+
+  <!-- Stage 2 -->
+  <g transform="translate(320, 84)">
+    <rect width="262" height="110" rx="8" fill="#FAF8F3" stroke="#1D1F23" stroke-width="1.5" />
+    <rect x="12" y="12" width="42" height="22" rx="4" fill="#1D1F23" />
+    <text x="23" y="27" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#FFC526">S2</text>
+    <text x="64" y="28" font-family="ui-sans-serif, sans-serif" font-size="13.5" font-weight="800" fill="#1D1F23">Noise Quarantine</text>
+    <text x="14" y="52" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Parallel 25-row chunks (Semaphore 5)</text>
+    <text x="14" y="70" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Filters OOO, spam, resets, invoices</text>
+    <text x="14" y="88" font-family="ui-monospace, monospace" font-size="10.5" font-weight="600" fill="#C87A19">⚡ Light Tier + 1-Click PM Override</text>
+  </g>
+
+  <!-- Stage 3 -->
+  <g transform="translate(608, 84)">
+    <rect width="262" height="110" rx="8" fill="#FAF8F3" stroke="#1D1F23" stroke-width="1.5" />
+    <rect x="12" y="12" width="42" height="22" rx="4" fill="#1D1F23" />
+    <text x="23" y="27" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#FFC526">S3</text>
+    <text x="64" y="28" font-family="ui-sans-serif, sans-serif" font-size="13.5" font-weight="800" fill="#1D1F23">Intent &amp; Clusters</text>
+    <text x="14" y="52" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Open domain taxonomy (17+ categories)</text>
+    <text x="14" y="70" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• 2-Pass Map-Reduce for large batches</text>
+    <text x="14" y="88" font-family="ui-monospace, monospace" font-size="10.5" font-weight="600" fill="#B91C1C">P0→P4 Stack · Top 3 + N Citations</text>
+  </g>
+
+  <!-- Stage 4 -->
+  <g transform="translate(896, 84)">
+    <rect width="272" height="110" rx="8" fill="#FAF8F3" stroke="#1D1F23" stroke-width="1.5" />
+    <rect x="12" y="12" width="42" height="22" rx="4" fill="#1D1F23" />
+    <text x="23" y="27" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#FFC526">S4</text>
+    <text x="64" y="28" font-family="ui-sans-serif, sans-serif" font-size="13.5" font-weight="800" fill="#1D1F23">Root Cause &amp; Triage</text>
+    <text x="14" y="52" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Engineering bottleneck diagnosis</text>
+    <text x="14" y="70" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Persona, Churn Risk &amp; Team Owner</text>
+    <text x="14" y="88" font-family="ui-monospace, monospace" font-size="10.5" font-weight="600" fill="#1D7A4C">Ready for Roadmap / Review / Defer</text>
+  </g>
+
+  <!-- Row 2: Stages 5 to 8 -->
+  <!-- Stage 5 -->
+  <g transform="translate(32, 214)">
+    <rect width="262" height="110" rx="8" fill="#FAF8F3" stroke="#1D1F23" stroke-width="1.5" />
+    <rect x="12" y="12" width="42" height="22" rx="4" fill="#E8920D" />
+    <text x="23" y="27" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#1D1F23">S5</text>
+    <text x="64" y="28" font-family="ui-sans-serif, sans-serif" font-size="13.5" font-weight="800" fill="#1D1F23">Prioritization Stack</text>
+    <text x="14" y="52" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Top-to-Bottom #1 Ranked Stack</text>
+    <text x="14" y="70" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• RICE, WSJF, ICE, MoSCoW &amp; Kano</text>
+    <text x="14" y="88" font-family="ui-monospace, monospace" font-size="10.5" font-weight="600" fill="#1D7A4C">🔒 Pure Python/TS (0.00% LLM Drift)</text>
+  </g>
+
+  <!-- Stage 6 -->
+  <g transform="translate(320, 214)">
+    <rect width="262" height="110" rx="8" fill="#FAF8F3" stroke="#1D1F23" stroke-width="1.5" />
+    <rect x="12" y="12" width="42" height="22" rx="4" fill="#E8920D" />
+    <text x="23" y="27" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#1D1F23">S6</text>
+    <text x="64" y="28" font-family="ui-sans-serif, sans-serif" font-size="13.5" font-weight="800" fill="#1D1F23">Interactive PRD Studio</text>
+    <text x="14" y="52" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• AI PRD Co-Pilot + Live Spec Viewer</text>
+    <text x="14" y="70" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Real-time changed section diffing</text>
+    <text x="14" y="88" font-family="ui-monospace, monospace" font-size="10.5" font-weight="600" fill="#C87A19">Gherkin AC + Undo + Linear Export</text>
+  </g>
+
+  <!-- Stage 7 -->
+  <g transform="translate(608, 214)">
+    <rect width="262" height="110" rx="8" fill="#FAF8F3" stroke="#1D1F23" stroke-width="1.5" />
+    <rect x="12" y="12" width="42" height="22" rx="4" fill="#E8920D" />
+    <text x="23" y="27" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#1D1F23">S7</text>
+    <text x="64" y="28" font-family="ui-sans-serif, sans-serif" font-size="13.5" font-weight="800" fill="#1D1F23">Release Analytics Board</text>
+    <text x="14" y="52" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Pre vs Post daily ticket delta charts</text>
+    <text x="14" y="70" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Channel &amp; Customer Tier mix bars</text>
+    <text x="14" y="88" font-family="ui-monospace, monospace" font-size="10.5" font-weight="600" fill="#1D7A4C">Canary Flag % + Spike Thresholds</text>
+  </g>
+
+  <!-- Stage 8 -->
+  <g transform="translate(896, 214)">
+    <rect width="272" height="110" rx="8" fill="#FAF8F3" stroke="#1D1F23" stroke-width="1.5" />
+    <rect x="12" y="12" width="42" height="22" rx="4" fill="#E8920D" />
+    <text x="23" y="27" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#1D1F23">S8</text>
+    <text x="64" y="28" font-family="ui-sans-serif, sans-serif" font-size="13.5" font-weight="800" fill="#1D1F23">Closing the Loop</text>
+    <text x="14" y="52" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Master-detail queue &amp; draft composer</text>
+    <text x="14" y="70" font-family="ui-sans-serif, sans-serif" font-size="11.5" fill="#45423D">• Customer Comms + Support Playbook</text>
+    <text x="14" y="88" font-family="ui-monospace, monospace" font-size="10.5" font-weight="600" fill="#C87A19">Zendesk · Discord · Email · Linear</text>
+  </g>
+</svg>
