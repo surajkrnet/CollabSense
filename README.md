@@ -125,23 +125,6 @@ $$\text{ICE} = \frac{\text{Impact}_{10} \times \text{Confidence}_{10} \times \te
 
 ---
 
-## Jakob Nielsen's 10 Usability Heuristics Implementation
-
-| Nielsen Heuristic | How CollabSense Implements It |
-| :--- | :--- |
-| **1. Visibility of System Status** | Live stage progress banners, elapsed-second counter with `<8s` auto-fallback notice, CSV import diagnostics (`Fetched X of Y rows`), model/latency pills, and `Updated` section badges in the Live PRD Viewer. |
-| **2. Match Between System & Real World** | Replaced cryptic `"Approve Gate 1"` jargon with natural PM workflow states (`Ready for Roadmap`, `Needs Review`, `Deferred`) and authentic domain signal categories. |
-| **3. User Control & Freedom** | 1-click Signal/Noise manual override in Stage 2, inline `P0`–`P4` severity override in Stage 4, multi-step **Undo Edit** stack in Stage 6 PRD Studio, and `Reopen as Draft` in Stage 8. |
-| **4. Consistency & Standards** | Unified semantic severity styling (`P0` crimson, `P1` amber-orange, `P2` gold, `P3` slate-blue, `P4` neutral) and shared `<CitationBar maxVisible={3} />` across all views. |
-| **5. Error Prevention** | Automatic RFC-4180 multi-line quote handling, delimiter auto-detection, formula-injection sanitization, and denominator clamping (`Effort >= 0.1`, `Duration >= 1`). |
-| **6. Recognition Rather Than Recall** | Expandable `+N more` citation drawer reveals full customer quotes, channel, tier, and ARR inline without leaving the current stage; Stage 6 keeps cluster context and 1-click prompt chips visible next to the chat input. |
-| **7. Flexibility & Efficiency of Use** | `Mark all P0/P1 Ready` batch triage button, `Quick Wins Only` filter in Stage 5, 1-click PRD refinement chips, and `Draft All with AI` in Stage 8. |
-| **8. Aesthetic & Minimalist Design** | Warm-cream sketchbook palette (`tokens.css`), decluttered vertical single-column stacks in S3–S5, collapsible weight sliders, and a clean master-detail composer in Stage 8. |
-| **9. Help Users Recognize & Recover from Errors** | Plain-language error banners with dismiss controls and automatic deterministic fallback when external AI providers are offline. |
-| **10. Help & Documentation** | Guided empty states with direct action buttons (`Go to Stage 1: Upload Data`), inline deterministic formula banners, and interactive Swagger docs at `/docs`. |
-
----
-
 ## Repository Structure
 
 ```text
