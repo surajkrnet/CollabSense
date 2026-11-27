@@ -1631,12 +1631,17 @@ export const DashboardApp: React.FC<DashboardAppProps> = ({ user }) => {
             {/* VIEW 0: HOME — AI COMMAND CO-PILOT */}
             {activeView === 'home' && (
               <div className="max-w-4xl mx-auto pt-4 space-y-6">
-                <div className="flex flex-col items-center text-center space-y-2.5">
-                  <PostHogBrandMark size="lg" showText={false} />
-                  <h1 className="text-2xl sm:text-3xl font-bold text-ink text-center">
-                    Hello {user.fullName.split(' ')[0].toLowerCase()}
+                <div className="flex flex-col items-center text-center space-y-2.5 relative">
+                  <span
+                    className="two26-sticker-pill text-xs"
+                    style={{ transform: 'rotate(-2.5deg)' }}
+                  >
+                    Two26 Studio Edition · &lt;7.5s Auto-Failover
+                  </span>
+                  <h1 className="two26-display text-4xl sm:text-6xl text-[#FF5400] text-center pt-1">
+                    HELLO {user.fullName.split(' ')[0].toUpperCase()}
                   </h1>
-                  <p className="text-xs text-ink-2 max-w-lg">
+                  <p className="text-xs sm:text-sm font-medium text-ink-2 max-w-lg">
                     Ask strategic PM questions grounded in your uploaded customer signals. Kimi K3.1 Pro automatically falls back within 8s for guaranteed low-latency answers.
                   </p>
                 </div>
@@ -1648,7 +1653,7 @@ export const DashboardApp: React.FC<DashboardAppProps> = ({ user }) => {
                   }}
                   className="max-w-2xl mx-auto"
                 >
-                  <div className="stock-card border border-rule px-3.5 py-2 flex items-center gap-2">
+                  <div className="stock-card border-2 border-[#111111] rounded-full px-4 py-2 flex items-center gap-2">
                     <input
                       type="text"
                       aria-label="Ask CollabSense Co-Pilot"

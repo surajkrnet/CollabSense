@@ -1,7 +1,3 @@
-/* Hallmark · shape: Feature Stack · genre: modern-minimal · theme: Coral (deal 1/3, seed b2b-product-discovery-triage-3dec·5088e27c·2026-11-20·r0) · redesign: full
- * hero: Banner · nav: masthead · footer: index columns · imagery: the product · signature: cream engineering sketchbook dossier with hedgehog marginalia and yellow-orange Gate 1 pill
- * axes: light/grotesk-sans/warm · posture: restrained · contrast: pass · fold: pass · v2.0.0 */
-/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5 · weakest: S, aligned every surface to DESIGN.md warm cream canvas (#eeefe9), flat 1px olive hairline cards, IBM Plex Sans ladder, and yellow-orange primary CTA pill */
 @import url("./tokens.css");
 @import url("./base.css");
 
@@ -11,16 +7,34 @@
 
 html {
   scroll-behavior: smooth;
+  font-family: var(--font-body);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
 }
 
 @layer components {
-  /* DESIGN.md Warm Cream Canvas (#eeefe9) end-to-end with no surface alternation or gradient */
+  /* Two26 Condensed Display Typography Voice */
+  .two26-display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.92;
+  }
+
+  /* Warm Alabaster Canvas (#F8EEE8) */
   .desk-surface {
     background-color: var(--color-paper);
     color: var(--color-ink);
   }
 
-  /* DESIGN.md Flat White Card on Cream Canvas (1px solid #bfc1b7, 6px radius, 0 shadow) */
+  /* Hero Soft Blush Canvas (#F9E2E1) */
+  .two26-blush-surface {
+    background-color: var(--color-blush);
+    color: var(--color-ink);
+  }
+
+  /* Crisp Rounded Card on Warm Canvas */
   .stock-card {
     background-color: var(--color-cotton);
     color: var(--color-ink);
@@ -28,7 +42,6 @@ html {
     border-radius: var(--radius-card);
   }
 
-  /* DESIGN.md Doc Card (#fcfcfa warm-white, 1px solid #bfc1b7, 6px radius) */
   .doc-card {
     background-color: var(--color-paper-3);
     color: var(--color-ink);
@@ -36,26 +49,108 @@ html {
     border-radius: var(--radius-card);
   }
 
-  /* DESIGN.md Soft Surface (#e5e7e0) for tab strips and secondary containers */
   .stock-groove {
     background-color: var(--color-paper-2);
     border: 1px solid var(--color-rule);
-    border-radius: var(--radius-card);
+    border-radius: var(--radius-pill);
   }
 
   .stamp-settled {
-    color: var(--color-paid);
+    color: #FFFFFF;
     font-weight: 700;
     display: inline-flex;
     align-items: center;
     gap: var(--space-2xs);
-    padding: var(--space-3xs) var(--space-xs);
-    border: 1px solid var(--color-accent-active);
-    border-radius: var(--radius-input);
-    background-color: var(--color-cotton);
+    padding: 3px 10px;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-accent);
   }
 
-  /* DESIGN.md button-primary: #f7a501 fill, #23251d deep olive text, 14px/700, 6px radius, 40px height */
+  /* Signature Two26 Black Pill CTA with Circular #FF5400 Arrow Badge */
+  .two26-cta-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 42px;
+    padding: 5px 6px 5px 18px;
+    border-radius: var(--radius-pill);
+    background-color: #111111;
+    color: #FFFFFF;
+    border: 1.5px solid #111111;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+  }
+  .two26-cta-pill:hover {
+    background-color: #FF5400;
+    border-color: #111111;
+    transform: translateY(-1px);
+  }
+  .two26-cta-pill .two26-arrow-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 9999px;
+    background-color: #FF5400;
+    color: #FFFFFF;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+  }
+  .two26-cta-pill:hover .two26-arrow-circle {
+    background-color: #111111;
+    color: #FFFFFF;
+    transform: rotate(12deg);
+  }
+
+  /* Floating Top-Left White Nav Pill (Work / About us style) */
+  .two26-nav-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 38px;
+    padding: 0 16px;
+    border-radius: var(--radius-pill);
+    background-color: #FFFFFF;
+    color: #111111;
+    border: 1px solid rgba(17, 17, 17, 0.08);
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+  }
+  .two26-nav-pill:hover {
+    background-color: #111111;
+    color: #FFFFFF;
+    transform: translateY(-1px);
+  }
+
+  /* Rotated Black Sticker Pill overlapping Display Headings */
+  .two26-sticker-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 18px;
+    border-radius: var(--radius-pill);
+    background-color: #111111;
+    color: #FFFFFF;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  /* Primary Button across Workspace & Forms: International Orange #FF5400 Pill */
   .cs-btn-primary,
   .ph-lemon-btn-primary,
   .ph-btn-orange,
@@ -66,24 +161,26 @@ html {
     justify-content: center;
     gap: var(--space-xs);
     min-height: 40px;
-    padding: var(--space-xs) var(--space-md);
-    border: 1px solid var(--color-accent-active);
-    border-radius: var(--radius-card);
-    background-color: var(--color-accent);
-    color: var(--color-accent-ink);
+    padding: var(--space-xs) 18px;
+    border: 1.5px solid #FF5400;
+    border-radius: var(--radius-pill);
+    background-color: #FF5400;
+    color: #FFFFFF;
     font-family: var(--font-body);
     font-size: var(--text-sm);
     font-weight: 700;
     white-space: nowrap;
     cursor: pointer;
-    transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
   }
   .cs-btn-primary:hover,
   .ph-lemon-btn-primary:hover,
   .ph-btn-orange:hover,
   .ph-btn-primary:hover,
   .ph-3d-orange:hover {
-    background-color: var(--color-accent-pressed);
+    background-color: #111111;
+    border-color: #111111;
+    color: #FFFFFF;
   }
   .cs-btn-primary:active,
   .ph-lemon-btn-primary:active,
@@ -91,7 +188,6 @@ html {
   .ph-btn-primary:active,
   .ph-3d-orange:active {
     transform: translateY(1px);
-    background-color: var(--color-accent-active);
   }
   .cs-btn-primary:focus-visible,
   .ph-lemon-btn-primary:focus-visible,
@@ -107,12 +203,12 @@ html {
   .ph-btn-primary:disabled,
   .ph-3d-orange:disabled,
   .cs-btn-primary[aria-disabled="true"] {
-    opacity: 0.55;
+    opacity: 0.5;
     cursor: not-allowed;
     transform: none;
   }
 
-  /* DESIGN.md button-secondary: quiet outline button on cream canvas */
+  /* Secondary Pill Button */
   .cs-btn-secondary,
   .ph-lemon-btn-secondary,
   .ph-btn-secondary,
@@ -122,23 +218,24 @@ html {
     justify-content: center;
     gap: var(--space-xs);
     min-height: 40px;
-    padding: var(--space-xs) var(--space-md);
+    padding: var(--space-xs) 18px;
     border: 1px solid var(--color-rule);
-    border-radius: var(--radius-card);
-    background-color: transparent;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-cotton);
     color: var(--color-ink);
     font-family: var(--font-body);
     font-size: var(--text-sm);
     font-weight: 600;
     white-space: nowrap;
     cursor: pointer;
-    transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
   }
   .cs-btn-secondary:hover,
   .ph-lemon-btn-secondary:hover,
   .ph-btn-secondary:hover,
   .ph-3d-white:hover {
     background-color: var(--color-paper-2);
+    border-color: #FF5400;
   }
   .cs-btn-secondary:active,
   .ph-lemon-btn-secondary:active,
@@ -173,28 +270,28 @@ html {
   .cs-card-selected {
     background-color: var(--color-cotton);
     color: var(--color-ink);
-    border: 2px solid var(--color-accent-active);
+    border: 2px solid #FF5400;
     border-radius: var(--radius-card);
   }
 
-  /* DESIGN.md text-input: white card surface, 1px hairline, 6px radius, 2px blue focus ring */
   .cs-input,
   .ph-input {
     width: 100%;
-    min-height: 38px;
+    min-height: 40px;
     background-color: var(--color-cotton);
     border: 1px solid var(--color-rule);
-    border-radius: var(--radius-card);
+    border-radius: var(--radius-input);
     padding: var(--space-xs) var(--space-sm);
     font-size: var(--text-sm);
     color: var(--color-ink);
     outline: 2px solid transparent;
     outline-offset: -2px;
+    transition: border-color var(--dur-micro) var(--ease-out);
   }
   .cs-input:focus-visible,
   .ph-input:focus-visible {
-    border-color: var(--color-focus);
-    outline-color: var(--color-focus);
+    border-color: #FF5400;
+    outline-color: #FF5400;
   }
 
   .cs-badge,
@@ -205,9 +302,9 @@ html {
     font-family: var(--font-body);
     font-size: var(--text-xs);
     font-weight: 600;
-    padding: var(--space-3xs) var(--space-xs);
+    padding: 2px 10px;
     border: 1px solid var(--color-rule);
-    border-radius: var(--radius-input);
+    border-radius: var(--radius-pill);
     background-color: var(--color-paper-2);
     color: var(--color-ink-2);
     white-space: nowrap;
@@ -219,9 +316,9 @@ html {
     gap: var(--space-2xs);
     font-family: var(--font-outlier);
     font-size: var(--text-xs);
-    font-weight: 600;
-    padding: var(--space-3xs) var(--space-xs);
-    border-radius: var(--radius-input);
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
     background-color: var(--color-error-soft);
     color: var(--color-error);
     border: 1px solid var(--color-error);
@@ -234,12 +331,12 @@ html {
     gap: var(--space-2xs);
     font-family: var(--font-outlier);
     font-size: var(--text-xs);
-    font-weight: 600;
-    padding: var(--space-3xs) var(--space-xs);
-    border-radius: var(--radius-input);
-    background-color: var(--color-cotton);
-    color: var(--color-paid);
-    border: 1px solid var(--color-accent-active);
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
+    background-color: #FFF0E8;
+    color: #D94600;
+    border: 1px solid #FF5400;
     white-space: nowrap;
   }
 
@@ -249,9 +346,9 @@ html {
     gap: var(--space-2xs);
     font-family: var(--font-outlier);
     font-size: var(--text-xs);
-    font-weight: 600;
-    padding: var(--space-3xs) var(--space-xs);
-    border-radius: var(--radius-input);
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
     background-color: var(--color-warn-soft);
     color: var(--color-ink);
     border: 1px solid var(--color-warn);
@@ -264,9 +361,9 @@ html {
     gap: var(--space-2xs);
     font-family: var(--font-outlier);
     font-size: var(--text-xs);
-    font-weight: 600;
-    padding: var(--space-3xs) var(--space-xs);
-    border-radius: var(--radius-input);
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
     background-color: var(--color-info-soft);
     color: var(--color-info);
     border: 1px solid var(--color-info);
@@ -279,9 +376,9 @@ html {
     gap: var(--space-2xs);
     font-family: var(--font-outlier);
     font-size: var(--text-xs);
-    font-weight: 600;
-    padding: var(--space-3xs) var(--space-xs);
-    border-radius: var(--radius-input);
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
     background-color: var(--color-paper-2);
     color: var(--color-muted);
     border: 1px solid var(--color-rule);
@@ -294,16 +391,15 @@ html {
     gap: var(--space-2xs);
     font-family: var(--font-outlier);
     font-size: var(--text-xs);
-    font-weight: 600;
-    padding: var(--space-3xs) var(--space-xs);
-    border-radius: var(--radius-input);
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
     background-color: var(--color-success-soft);
     color: var(--color-success);
     border: 1px solid var(--color-success);
     white-space: nowrap;
   }
 
-  /* DESIGN.md Four-Color Callout Banner Family (doc article body & studio callouts) */
   .cs-banner-blue {
     background-color: var(--color-info-soft);
     color: var(--color-ink);
@@ -333,100 +429,58 @@ html {
     padding: var(--space-md) var(--space-lg);
   }
 
-  /* DESIGN.md Dark Code Island (#23251d fill, #ffffff text, Source Code Pro) */
   .cs-code-block {
     background-color: var(--color-board);
     color: var(--color-board-type);
     font-family: var(--font-outlier);
     font-size: var(--text-sm);
-    line-height: 1.43;
+    line-height: 1.45;
     border-radius: var(--radius-card);
     padding: var(--space-md) var(--space-lg);
   }
 
-  /* DESIGN.md Inline Code Chip (#e5e7e0 fill, 2px radius) */
   .cs-inline-code {
     background-color: var(--color-paper-2);
     color: var(--color-ink);
     font-family: var(--font-outlier);
     font-size: var(--text-xs);
-    padding: var(--space-3xs) var(--space-2xs);
-    border-radius: var(--space-3xs);
+    padding: 2px 6px;
+    border-radius: 6px;
   }
 
-  /* Dynamic panel transition using only opacity & transform */
   .cs-panel-enter {
     animation: csPanelFadeIn var(--dur-short) var(--ease-out) both;
   }
 
-  /* PostHog-inspired Landing Layout & Interactive Rhythm */
-  .landing-hero {
-    padding-top: var(--space-sm);
-    padding-bottom: var(--space-2xl);
-  }
-
-  .landing-section {
-    padding-top: var(--space-3xl);
-    scroll-margin-top: var(--space-lg);
-  }
-
-  .hero-title {
-    font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
-    line-height: 1.12;
-    letter-spacing: -0.025em;
-    max-width: 18ch;
-  }
-
-  .section-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: var(--space-md);
-  }
-
-  .section-title {
-    font-size: clamp(1.375rem, 1.15rem + 0.9vw, 1.875rem);
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-  }
-
   .cs-btn-lg {
-    min-height: 44px;
-    padding: var(--space-sm) var(--space-lg);
+    min-height: 46px;
+    padding: 10px 24px;
     font-size: var(--text-sm);
   }
 
   .stage-card {
-    transition: transform var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    transition: transform var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
   }
   .stage-card:hover {
-    border-color: var(--color-ink);
-  }
-  .stage-card:active {
-    transform: translateY(1px);
-  }
-
-  .desk-icon {
-    transition: transform var(--dur-micro) var(--ease-out);
-  }
-  .desk-icon:active {
-    transform: translateY(1px);
+    border-color: #FF5400;
+    transform: translateY(-3px);
   }
 
   .copy-btn {
-    transition: background-color var(--dur-micro) var(--ease-out);
+    transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
   }
   .copy-btn:hover {
-    background-color: var(--color-paper-2);
+    background-color: #FF5400;
+    color: #FFFFFF;
   }
 
   .footer-link {
-    color: var(--color-ink-2);
-    transition: color var(--dur-micro) var(--ease-out);
+    color: #F8EEE8;
+    opacity: 0.9;
+    transition: opacity var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
   }
   .footer-link:hover {
-    color: var(--color-ink);
+    opacity: 1;
     text-decoration: underline;
     text-underline-offset: 4px;
   }
@@ -446,7 +500,7 @@ html {
 @keyframes csPanelFadeIn {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -454,11 +508,11 @@ html {
   }
 }
 
-/* Custom Range Slider */
+/* Custom Range Slider in Two26 International Orange & Jet Black */
 input[type="range"].ph-slider {
   -webkit-appearance: none;
   appearance: none;
-  height: 6px;
+  height: 8px;
   background: var(--color-paper-2);
   border-radius: var(--radius-pill);
   border: 1px solid var(--color-rule);
@@ -467,20 +521,19 @@ input[type="range"].ph-slider {
 input[type="range"].ph-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: var(--radius-pill);
-  background: var(--color-accent);
-  border: 2px solid var(--color-ink);
+  background: #FF5400;
+  border: 2.5px solid #111111;
   cursor: pointer;
   transition: transform var(--dur-micro) var(--ease-out);
 }
 
 input[type="range"].ph-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.1);
+  transform: scale(1.12);
 }
 
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -490,10 +543,10 @@ input[type="range"].ph-slider::-webkit-slider-thumb:hover {
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-rule);
-  border-radius: var(--radius-input);
+  border-radius: var(--radius-pill);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-muted);
+  background: #FF5400;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -20,19 +20,20 @@ export const PostHogWindow: React.FC<PostHogWindowProps> = ({
   rightSlot,
 }) => {
   const badgeColorMap = {
-    yellow: 'bg-paper-2 text-ink border-rule-2',
-    orange: 'stamp-settled',
+    yellow: 'bg-paper-2 text-ink border-rule',
+    orange: 'bg-[#FF5400] text-white border-[#FF5400] font-semibold',
     green: 'cs-badge-verified',
-    ink: 'bg-paper-2 text-ink-2 border-rule',
+    ink: 'bg-[#111111] text-[#F8EEE8] border-[#111111]',
   };
 
   return (
     <div className={`stock-card border border-rule overflow-hidden ${className}`}>
-      <div className="bg-paper-2 border-b border-rule px-4 py-2.5 flex flex-wrap items-center justify-between gap-2">
+      <div className="bg-paper-2/80 border-b border-rule px-5 py-3 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="font-semibold text-xs sm:text-sm text-ink truncate">{title}</div>
+          <span className="w-2.5 h-2.5 rounded-full bg-[#FF5400] shrink-0" aria-hidden="true" />
+          <div className="font-bold text-xs sm:text-sm text-ink truncate tracking-tight">{title}</div>
           {path && (
-            <code className="hidden md:inline-block font-mono text-xs text-muted bg-paper px-2 py-0.5 rounded-input border border-rule truncate">
+            <code className="hidden md:inline-block font-mono text-xs text-muted bg-cotton px-2.5 py-0.5 rounded-full border border-rule truncate">
               {path}
             </code>
           )}
@@ -41,7 +42,7 @@ export const PostHogWindow: React.FC<PostHogWindowProps> = ({
         <div className="flex items-center gap-2 shrink-0">
           {badgeText && (
             <span
-              className={`text-xs font-medium px-2.5 py-0.5 rounded-input border ${badgeColorMap[badgeVariant]}`}
+              className={`text-xs font-medium px-3 py-0.5 rounded-full border ${badgeColorMap[badgeVariant]}`}
             >
               {badgeText}
             </span>
@@ -50,7 +51,7 @@ export const PostHogWindow: React.FC<PostHogWindowProps> = ({
         </div>
       </div>
 
-      <div className="p-4 sm:p-5 bg-cotton">{children}</div>
+      <div className="p-4 sm:p-6 bg-cotton">{children}</div>
     </div>
   );
 };

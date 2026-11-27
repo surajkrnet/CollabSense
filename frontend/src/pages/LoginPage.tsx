@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Eye, EyeOff, Loader2, ShieldCheck } from 'lucide-react';
 import { PostHogBrandMark } from '../components/PostHogDesktopShell';
 import {
   isSupabaseConfigured,
@@ -51,7 +51,6 @@ export const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
-  // Already signed in (or just returned from Google / an email confirmation link): continue.
   useEffect(() => {
     if (!supabase) return;
     let mounted = true;
@@ -69,7 +68,6 @@ export const LoginPage: React.FC = () => {
     };
   }, [navigate, nextPath]);
 
-  // Reset messages when switching between sign in and sign up.
   useEffect(() => {
     setFieldErrors({});
     setFormError(null);
@@ -157,7 +155,6 @@ export const LoginPage: React.FC = () => {
       setFormError(error?.message || 'Google sign in could not start.');
       return;
     }
-    // Ask the auth server first, so a disabled provider shows a message instead of a raw JSON page.
     try {
       const probe = await fetch(data.url, { method: 'GET', redirect: 'manual' });
       if (probe.type !== 'opaqueredirect' && probe.status >= 400) {
@@ -172,7 +169,7 @@ export const LoginPage: React.FC = () => {
         return;
       }
     } catch {
-      /* network probe blocked by the browser: fall through to the redirect */
+      /* network probe blocked by browser: proceed to OAuth redirect */
     }
     window.location.assign(data.url);
   };
@@ -180,170 +177,228 @@ export const LoginPage: React.FC = () => {
   const isSignup = mode === 'signup';
 
   return (
-    <div className="min-h-screen desk-surface text-ink flex flex-col items-center justify-center px-4 py-10">
-      <Link
-        to="/"
-        className="mb-8 inline-flex items-center justify-center rounded-input hover:opacity-85 transition-opacity"
-        aria-label="CollabSense home"
+    <div className="min-h-screen two26-blush-surface text-ink flex flex-col justify-between px-4 py-6 sm:px-8 relative overflow-hidden">
+      {/* Decorative Edge-Bleeding #FF5400 Vector Loop */}
+      <svg
+        className="pointer-events-none absolute -right-24 -top-12 w-80 h-80 opacity-90"
+        viewBox="0 0 320 320"
+        fill="none"
+        aria-hidden="true"
       >
-        <PostHogBrandMark size="lg" textLabel="CollabSense" />
-      </Link>
+        <path
+          d="M340 30 C 160 40, 110 170, 210 230 C 280 270, 310 170, 210 150 C 110 130, 110 260, 330 300"
+          stroke="#FF5400"
+          strokeWidth="26"
+          strokeLinecap="round"
+        />
+      </svg>
 
-      <main className="w-full max-w-sm stock-card p-6 sm:p-7 cs-panel-enter">
-        <div className="grid grid-cols-2 border-b border-rule mb-5" role="tablist" aria-label="Authentication mode">
-          <Link
-            to={`/login${nextQuery}`}
-            role="tab"
-            aria-selected={!isSignup}
-            className={`py-2.5 text-center text-sm font-semibold border-b-2 transition-colors ${
-              !isSignup ? 'border-paid text-ink' : 'border-transparent text-ink-2 hover:text-ink'
-            }`}
-          >
-            Log in
-          </Link>
-          <Link
-            to={`/signup${nextQuery}`}
-            role="tab"
-            aria-selected={isSignup}
-            className={`py-2.5 text-center text-sm font-semibold border-b-2 transition-colors ${
-              isSignup ? 'border-paid text-ink' : 'border-transparent text-ink-2 hover:text-ink'
-            }`}
-          >
-            Create account
-          </Link>
-        </div>
+      {/* Top Bar */}
+      <header className="max-w-[1400px] w-full mx-auto flex items-center justify-between gap-4 relative z-10">
+        <Link to="/" className="two26-nav-pill">
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Back to Studio</span>
+        </Link>
 
-        <h1 className="auth-title text-xl font-bold text-ink text-center">
-          {isSignup ? 'Create your account' : 'Log in'}
-        </h1>
-
-        <button
-          type="button"
-          onClick={handleGoogle}
-          disabled={googleLoading || loading}
-          data-testid="google-oauth-btn"
-          className="mt-6 w-full cs-btn-secondary"
+        <Link
+          to="/"
+          className="inline-flex items-center justify-center rounded-full hover:opacity-85 transition-opacity"
+          aria-label="CollabSense home"
         >
-          {googleLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <GoogleGlyph />}
-          <span>Continue with Google</span>
-        </button>
+          <PostHogBrandMark size="md" textLabel="COLLABSENSE" />
+        </Link>
 
-        <div className="my-5 flex items-center gap-3 text-xs text-muted">
-          <span className="h-px flex-1 bg-rule" />
-          <span>or</span>
-          <span className="h-px flex-1 bg-rule" />
+        <div className="hidden sm:block text-right text-[11px] font-bold text-[#111111]">
+          <div>Supabase RLS</div>
+          <div className="text-[#6E6059]">Google OAuth Ready</div>
+        </div>
+      </header>
+
+      {/* Center Auth Card */}
+      <div className="my-8 flex flex-col items-center justify-center relative z-10">
+        <div className="text-center mb-6 relative">
+          <span
+            className="two26-sticker-pill text-xs mb-3 inline-flex"
+            style={{ transform: 'rotate(-3deg)' }}
+          >
+            {isSignup ? 'Free Early Access · All 8 Stages' : 'Welcome back to the Studio'}
+          </span>
+          <h1 className="two26-display text-5xl sm:text-6xl text-[#FF5400]">
+            {isSignup ? 'CREATE YOUR ACCOUNT' : 'ENTER THE WORKSPACE'}
+          </h1>
         </div>
 
-        <form onSubmit={handleSubmit} noValidate className="space-y-4">
-          {isSignup && (
+        <main className="w-full max-w-md bg-[#FFFFFF] border-2 border-[#111111] rounded-[28px] p-6 sm:p-8 cs-panel-enter">
+          <div
+            className="grid grid-cols-2 bg-[#F8EEE8] p-1 rounded-full border border-[#DFCFC6] mb-6"
+            role="tablist"
+            aria-label="Authentication mode"
+          >
+            <Link
+              to={`/login${nextQuery}`}
+              role="tab"
+              aria-selected={!isSignup}
+              className={`py-2 text-center text-xs font-extrabold uppercase tracking-wider rounded-full transition-colors ${
+                !isSignup ? 'bg-[#111111] text-[#FFFFFF]' : 'text-[#3D3531] hover:text-[#111111]'
+              }`}
+            >
+              Log in
+            </Link>
+            <Link
+              to={`/signup${nextQuery}`}
+              role="tab"
+              aria-selected={isSignup}
+              className={`py-2 text-center text-xs font-extrabold uppercase tracking-wider rounded-full transition-colors ${
+                isSignup ? 'bg-[#FF5400] text-[#FFFFFF]' : 'text-[#3D3531] hover:text-[#111111]'
+              }`}
+            >
+              Create account
+            </Link>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleGoogle}
+            disabled={googleLoading || loading}
+            data-testid="google-oauth-btn"
+            className="w-full cs-btn-secondary py-2.5 font-bold border-[#111111]/20"
+          >
+            {googleLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <GoogleGlyph />}
+            <span>Continue with Google</span>
+          </button>
+
+          <div className="my-5 flex items-center gap-3 text-xs font-bold uppercase tracking-wider text-muted">
+            <span className="h-px flex-1 bg-rule" />
+            <span>or with work email</span>
+            <span className="h-px flex-1 bg-rule" />
+          </div>
+
+          <form onSubmit={handleSubmit} noValidate className="space-y-4">
+            {isSignup && (
+              <div>
+                <label htmlFor="auth-fullname" className="block text-xs font-bold uppercase tracking-wider text-ink mb-1.5">
+                  Name
+                </label>
+                <input
+                  id="auth-fullname"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Suraj K R"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  aria-invalid={Boolean(fieldErrors.name)}
+                  aria-describedby={fieldErrors.name ? 'err-name' : undefined}
+                  className="cs-input"
+                />
+                {fieldErrors.name && (
+                  <p id="err-name" className="mt-1 text-xs font-semibold text-error">
+                    {fieldErrors.name}
+                  </p>
+                )}
+              </div>
+            )}
+
             <div>
-              <label htmlFor="auth-fullname" className="block text-sm font-semibold text-ink mb-1.5">
-                Name
+              <label htmlFor="auth-email" className="block text-xs font-bold uppercase tracking-wider text-ink mb-1.5">
+                Email
               </label>
               <input
-                id="auth-fullname"
-                type="text"
-                autoComplete="name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                aria-invalid={Boolean(fieldErrors.name)}
-                aria-describedby={fieldErrors.name ? 'err-name' : undefined}
+                id="auth-email"
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                placeholder="pm@company.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onBlur={() => email && setFieldErrors((f) => ({ ...f, email: validateEmail(email) || undefined }))}
+                aria-invalid={Boolean(fieldErrors.email)}
+                aria-describedby={fieldErrors.email ? 'err-email' : undefined}
                 className="cs-input"
               />
-              {fieldErrors.name && (
-                <p id="err-name" className="mt-1 text-xs text-error">
-                  {fieldErrors.name}
+              {fieldErrors.email && (
+                <p id="err-email" className="mt-1 text-xs font-semibold text-error">
+                  {fieldErrors.email}
                 </p>
               )}
             </div>
-          )}
 
-          <div>
-            <label htmlFor="auth-email" className="block text-sm font-semibold text-ink mb-1.5">
-              Email
-            </label>
-            <input
-              id="auth-email"
-              type="email"
-              inputMode="email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onBlur={() => email && setFieldErrors((f) => ({ ...f, email: validateEmail(email) || undefined }))}
-              aria-invalid={Boolean(fieldErrors.email)}
-              aria-describedby={fieldErrors.email ? 'err-email' : undefined}
-              className="cs-input"
-            />
-            {fieldErrors.email && (
-              <p id="err-email" className="mt-1 text-xs text-error">
-                {fieldErrors.email}
-              </p>
+            <div>
+              <label htmlFor="auth-password" className="block text-xs font-bold uppercase tracking-wider text-ink mb-1.5">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  id="auth-password"
+                  type={showPassword ? 'text' : 'password'}
+                  autoComplete={isSignup ? 'new-password' : 'current-password'}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  aria-invalid={Boolean(fieldErrors.password)}
+                  aria-describedby={fieldErrors.password ? 'err-password' : undefined}
+                  className="cs-input pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  className="absolute inset-y-0 right-0 px-3 flex items-center text-muted hover:text-ink"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+              {fieldErrors.password && (
+                <p id="err-password" className="mt-1 text-xs font-semibold text-error">
+                  {fieldErrors.password}
+                </p>
+              )}
+            </div>
+
+            {formError && (
+              <div role="alert" className="cs-banner-red text-xs font-semibold">
+                {formError}
+              </div>
             )}
-          </div>
-
-          <div>
-            <label htmlFor="auth-password" className="block text-sm font-semibold text-ink mb-1.5">
-              Password
-            </label>
-            <div className="relative">
-              <input
-                id="auth-password"
-                type={showPassword ? 'text' : 'password'}
-                autoComplete={isSignup ? 'new-password' : 'current-password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                aria-invalid={Boolean(fieldErrors.password)}
-                aria-describedby={fieldErrors.password ? 'err-password' : undefined}
-                className="cs-input pr-10"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((v) => !v)}
-                className="absolute inset-y-0 right-0 px-3 flex items-center text-muted hover:text-ink"
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-              >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
-            {fieldErrors.password && (
-              <p id="err-password" className="mt-1 text-xs text-error">
-                {fieldErrors.password}
-              </p>
+            {notice && (
+              <div role="status" className="cs-banner-green text-xs font-semibold">
+                {notice}
+              </div>
             )}
-          </div>
 
-          {formError && (
-            <div role="alert" className="cs-banner-red text-sm">
-              {formError}
-            </div>
-          )}
-          {notice && (
-            <div role="status" className="cs-banner-green text-sm">
-              {notice}
-            </div>
-          )}
+            <button
+              type="submit"
+              disabled={loading || googleLoading || !isSupabaseConfigured}
+              data-testid="email-auth-submit"
+              className="w-full two26-cta-pill justify-center py-2.5"
+            >
+              {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+              <span>{isSignup ? 'Create account' : 'Sign in to Workspace'}</span>
+              <span className="two26-arrow-circle" aria-hidden="true">
+                <ArrowUpRight className="w-4 h-4" />
+              </span>
+            </button>
+          </form>
 
-          <button
-            type="submit"
-            disabled={loading || googleLoading || !isSupabaseConfigured}
-            data-testid="email-auth-submit"
-            className="w-full cs-btn-primary"
-          >
-            {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-            <span>{isSignup ? 'Create account' : 'Sign in'}</span>
-          </button>
-        </form>
+          <p className="mt-6 text-center text-xs font-medium text-ink-2">
+            {isSignup ? 'Already have an account? ' : 'New to CollabSense? '}
+            <Link
+              to={`${isSignup ? '/login' : '/signup'}${nextQuery}`}
+              className="font-extrabold text-[#FF5400] underline underline-offset-4 hover:text-[#111111]"
+            >
+              {isSignup ? 'Sign in' : 'Create an account'}
+            </Link>
+          </p>
+        </main>
+      </div>
 
-        <p className="mt-5 text-center text-sm text-ink-2">
-          {isSignup ? 'Already have an account? ' : 'New to CollabSense? '}
-          <Link
-            to={`${isSignup ? '/login' : '/signup'}${nextQuery}`}
-            className="font-semibold text-ink underline underline-offset-4 hover:text-paid"
-          >
-            {isSignup ? 'Sign in' : 'Create an account'}
-          </Link>
-        </p>
-      </main>
+      {/* Footer Note */}
+      <footer className="max-w-[1400px] w-full mx-auto flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-[#6E6059] relative z-10">
+        <span className="inline-flex items-center gap-1.5">
+          <ShieldCheck className="w-4 h-4 text-[#15803D]" />
+          Protected by Supabase Row-Level Security
+        </span>
+        <span>CollabSense Studio · v4.1.0</span>
+      </footer>
     </div>
   );
 };

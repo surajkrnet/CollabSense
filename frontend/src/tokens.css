@@ -1,58 +1,59 @@
-/* Hallmark · DESIGN.md Locked System (Warm Cream Sketchbook · IBM Plex Sans · Source Code Pro · Yellow-Orange CTA #f7a501) */
+/* Two26 Studio Design System Tokens (Warm Alabaster #F8EEE8 · Blush Hero #F9E2E1 · International Orange #FF5400 · Jet Ink #111111 · Barlow Condensed + Plus Jakarta Sans) */
 :root {
-  /* DESIGN.md Surfaces: Canvas #eeefe9, Surface-Soft #e5e7e0, Surface-Doc #fcfcfa, Surface-Card #ffffff, Surface-Dark #23251d */
-  --color-paper:      oklch(95.1% 0.008 106);
-  --color-paper-2:    oklch(92.6% 0.009 108);
-  --color-paper-3:    oklch(98.8% 0.005 106);
-  --color-desk:       oklch(95.1% 0.008 106);
-  --color-cotton:     oklch(99.6% 0.005 106);
-  --color-board:      oklch(26.1% 0.015 118);
-  --color-board-type: oklch(99.5% 0.005 106);
+  /* Surfaces: Warm Alabaster Canvas #F8EEE8, Soft Sand #EFE3DC, Hero Blush #F9E2E1, Crisp Card #FFFFFF, Dark Stage #111111 */
+  --color-paper:      #F8EEE8;
+  --color-paper-2:    #EFE3DC;
+  --color-paper-3:    #FBF6F3;
+  --color-blush:      #F9E2E1;
+  --color-desk:       #F8EEE8;
+  --color-cotton:     #FFFFFF;
+  --color-board:      #111111;
+  --color-board-type: #F8EEE8;
 
-  /* DESIGN.md Text: Ink #23251d, Body #4d4f46, Charcoal #33342d, Mute #57594f (AA contrast), Ash #9b9c92 */
-  --color-ink:        oklch(26.1% 0.015 118);
-  --color-print:      oklch(26.1% 0.015 118);
-  --color-ink-2:      oklch(42.5% 0.015 115);
-  --color-charcoal:   oklch(32.5% 0.014 115);
-  --color-muted:      oklch(46.5% 0.015 112);
+  /* Typography Ink Hierarchy */
+  --color-ink:        #111111;
+  --color-print:      #111111;
+  --color-ink-2:      #3D3531;
+  --color-charcoal:   #241F1C;
+  --color-muted:      #6E6059;
 
-  /* DESIGN.md Hairlines: Hairline #bfc1b7, Hairline-Soft #dcdfd2 */
-  --color-rule:       oklch(80.8% 0.012 112);
-  --color-rule-2:     oklch(89.8% 0.013 114);
+  /* Subtle Warm Borders & Hairlines */
+  --color-rule:       #DFCFC6;
+  --color-rule-2:     #ECE0D9;
 
-  /* DESIGN.md Primary & Accents: Primary #f7a501, Pressed #dd9001, Active #b17816, On-Primary #23251d */
-  --color-accent:         oklch(78.2% 0.165 73);
-  --color-accent-pressed: oklch(72.1% 0.155 72);
-  --color-accent-active:  oklch(62.4% 0.128 73);
-  --color-accent-ink:     oklch(26.1% 0.015 118);
-  --color-paid:           oklch(43.5% 0.108 73);
-  --color-link-teal:      oklch(49.5% 0.105 228);
-  --color-link-blue:      oklch(48.8% 0.217 264);
-  --color-focus:          oklch(60.5% 0.162 252);
+  /* Primary Brand Accent: Two26 International Orange #FF5400 */
+  --color-accent:         #FF5400;
+  --color-accent-pressed: #E04800;
+  --color-accent-active:  #C93F00;
+  --color-accent-ink:     #FFFFFF;
+  --color-paid:           #D94600;
+  --color-link-teal:      #0F766E;
+  --color-link-blue:      #1D4ED8;
+  --color-focus:          #FF5400;
 
-  /* DESIGN.md Semantic & Callout Pastels */
-  --color-success:      oklch(46.5% 0.112 162);
-  --color-success-soft: oklch(92.8% 0.028 152);
-  --color-warn:         oklch(46.0% 0.115 73);
-  --color-warn-soft:    oklch(93.5% 0.038 82);
-  --color-error:        oklch(48.5% 0.175 26);
-  --color-error-soft:   oklch(90.1% 0.038 22);
-  --color-info:         oklch(48.8% 0.162 252);
-  --color-info-soft:    oklch(92.7% 0.026 245);
-  --color-purple:       oklch(45.5% 0.145 305);
-  --color-purple-soft:  oklch(90.2% 0.032 308);
+  /* Semantic Status Colors */
+  --color-success:      #15803D;
+  --color-success-soft: #DCFCE7;
+  --color-warn:         #B45309;
+  --color-warn-soft:    #FEF3C7;
+  --color-error:        #B91C1C;
+  --color-error-soft:   #FEE2E2;
+  --color-info:         #1D4ED8;
+  --color-info-soft:    #DBEAFE;
+  --color-purple:       #6D28D9;
+  --color-purple-soft:  #EDE9FE;
 
-  /* DESIGN.md Typography: IBM Plex Sans + Source Code Pro */
-  --font-display: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body:    "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-ui:      "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Two26 Dual-Voice Typography: Barlow Condensed Display + Plus Jakarta Sans UI + Source Code Pro */
+  --font-display: "Barlow Condensed", "Arial Narrow", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body:    "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-ui:      "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-outlier: "Source Code Pro", ui-monospace, monospace;
   --font-mono:    "Source Code Pro", ui-monospace, monospace;
 
-  /* DESIGN.md Shapes & Flat Elevation (0 drop shadows, 1px hairline border, 6px card radius) */
-  --radius-card:     6px;
-  --radius-stock:    6px;
-  --radius-input:    4px;
+  /* Rounded Card & Pill Geometry (Two26 flat surfaces, zero heavy shadows, generous radii) */
+  --radius-card:     16px;
+  --radius-stock:    18px;
+  --radius-input:    10px;
   --radius-pill:     9999px;
   --rule-hair:       1px;
   --shadow-card:     none;
@@ -62,9 +63,9 @@
   --press-groove:    none;
 
   --tracking-display: -0.02em;
-  --display-weight:   700;
+  --display-weight:   800;
 
-  /* Shared scale */
+  /* Spacing Scale */
   --space-3xs: 2px;  --space-2xs: 4px;   --space-xs: 8px;    --space-sm: 12px;
   --space-md:  16px; --space-lg:  24px;  --space-xl: 32px;   --space-2xl: 48px;
   --space-3xl: 64px; --space-4xl: 80px;
@@ -76,16 +77,16 @@
   --text-xl:  1.3125rem;
   --text-2xl: 1.5rem;
   --text-3xl: 2.25rem;
-  --text-4xl: clamp(1.85rem, 1.4rem + 1.8vw, 2.5rem);
+  --text-4xl: clamp(2.2rem, 1.6rem + 2.4vw, 3.5rem);
 
   --measure:      65ch;
   --measure-wide: 75ch;
-  --container:    1280px;
+  --container:    1400px;
 
   --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in:     cubic-bezier(0.64, 0, 0.78, 0);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --dur-micro:   120ms;
-  --dur-short:   200ms;
-  --dur-long:    360ms;
+  --dur-micro:   140ms;
+  --dur-short:   220ms;
+  --dur-long:    380ms;
 }
