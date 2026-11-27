@@ -286,8 +286,8 @@ export const LandingPage: React.FC = () => {
           </button>
 
           {/* Right Status + Auth + Signature Two26 Black Pill CTA */}
-          <div className="flex items-center gap-2 sm:gap-3 pointer-events-auto">
-            <div className="hidden xl:block text-right leading-tight text-[11px] font-semibold text-[#111111]">
+          <div className="flex items-center gap-1.5 sm:gap-2 pointer-events-auto shrink-0">
+            <div className="hidden 2xl:block text-right leading-tight text-[11px] font-semibold text-[#111111]">
               <div>Deterministic OS</div>
               <div className="text-[#6E6059]">v4.1 · &lt;8s Failover</div>
             </div>
@@ -296,7 +296,7 @@ export const LandingPage: React.FC = () => {
               type="button"
               onClick={() => navigate('/login')}
               data-testid="hero-signin-btn"
-              className="two26-nav-pill"
+              className="two26-nav-pill px-3.5"
             >
               Log in
             </button>
@@ -317,7 +317,7 @@ export const LandingPage: React.FC = () => {
               type="button"
               onClick={() => setDrawerOpen(true)}
               aria-label="Open quick studio launcher"
-              className="two26-nav-pill hidden sm:inline-flex border-[#FF5400]"
+              className="two26-nav-pill hidden sm:inline-flex border-[#FF5400] px-3.5"
             >
               <span className="w-2 h-2 rounded-full bg-[#FF5400]" />
               <span>Studio Menu</span>
@@ -1536,11 +1536,11 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* Giant Edge-to-Edge #F8EEE8 Condensed Footer Wordmark */}
-          <div className="pt-4 border-t border-[#F8EEE8]/25 select-none">
+          <div className="pt-4 border-t border-[#F8EEE8]/25 select-none overflow-hidden">
             <div className="text-xs font-bold text-[#F8EEE8]/85 mb-2">
               © Copyright 2026 — CollabSense Autonomous Product Discovery OS
             </div>
-            <div className="two26-display text-[#F8EEE8] text-[4.2rem] sm:text-[8.5rem] md:text-[11.5rem] lg:text-[13.8rem] leading-[0.84] tracking-tight text-center">
+            <div className="two26-display text-[#F8EEE8] text-[clamp(2.4rem,10.5vw,9.4rem)] whitespace-nowrap leading-[0.88] tracking-tight text-center">
               COLLABSENSE 26
             </div>
           </div>
