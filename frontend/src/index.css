@@ -67,8 +67,10 @@ html {
     background-color: var(--color-accent);
   }
 
-  /* Signature Two26 Black Pill CTA with Circular #FF5400 Arrow Badge */
+  /* Signature Two26 Black Pill CTA with Circular #FF5400 Arrow Badge & Liquid Hover */
   .two26-cta-pill {
+    position: relative;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
@@ -84,12 +86,20 @@ html {
     font-weight: 700;
     white-space: nowrap;
     cursor: pointer;
-    transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    transition:
+      transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      background-color 220ms var(--ease-out),
+      border-color 220ms var(--ease-out),
+      box-shadow 220ms var(--ease-out);
   }
   .two26-cta-pill:hover {
     background-color: #FF5400;
     border-color: #111111;
-    transform: translateY(-1px);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 20px -6px rgba(255, 84, 0, 0.45);
+  }
+  .two26-cta-pill:active {
+    transform: translateY(0) scale(0.99);
   }
   .two26-cta-pill .two26-arrow-circle {
     width: 30px;
@@ -101,16 +111,21 @@ html {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    transition:
+      background-color 220ms var(--ease-out),
+      color 220ms var(--ease-out),
+      transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .two26-cta-pill:hover .two26-arrow-circle {
     background-color: #111111;
     color: #FFFFFF;
-    transform: rotate(12deg);
+    transform: rotate(45deg) scale(1.08);
   }
 
-  /* Floating Top-Left White Nav Pill (Work / About us style) */
+  /* Floating Top-Left White Nav Pill with Two26 Sweep Fill Effect */
   .two26-nav-pill {
+    position: relative;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -120,21 +135,29 @@ html {
     border-radius: var(--radius-pill);
     background-color: #FFFFFF;
     color: #111111;
-    border: 1px solid rgba(17, 17, 17, 0.08);
+    border: 1px solid rgba(17, 17, 17, 0.09);
     font-family: var(--font-body);
     font-size: 0.8125rem;
     font-weight: 600;
     white-space: nowrap;
     cursor: pointer;
-    transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    transition:
+      background-color 200ms var(--ease-out),
+      color 200ms var(--ease-out),
+      border-color 200ms var(--ease-out),
+      transform 240ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .two26-nav-pill:hover {
     background-color: #111111;
     color: #FFFFFF;
-    transform: translateY(-1px);
+    border-color: #111111;
+    transform: translateY(-2px);
+  }
+  .two26-nav-pill:active {
+    transform: translateY(0) scale(0.98);
   }
 
-  /* Rotated Black Sticker Pill overlapping Display Headings */
+  /* Rotated Black Sticker Pill with Spring Hover & Floating Bob */
   .two26-sticker-pill {
     display: inline-flex;
     align-items: center;
@@ -148,6 +171,13 @@ html {
     font-weight: 600;
     letter-spacing: -0.01em;
     white-space: nowrap;
+    transition:
+      transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      background-color 200ms var(--ease-out);
+  }
+  .two26-sticker-pill:hover {
+    background-color: #FF5400;
+    color: #FFFFFF;
   }
 
   /* Primary Button across Workspace & Forms: International Orange #FF5400 Pill */
@@ -171,7 +201,10 @@ html {
     font-weight: 700;
     white-space: nowrap;
     cursor: pointer;
-    transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    transition:
+      transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      background-color 180ms var(--ease-out),
+      border-color 180ms var(--ease-out);
   }
   .cs-btn-primary:hover,
   .ph-lemon-btn-primary:hover,
@@ -181,6 +214,7 @@ html {
     background-color: #111111;
     border-color: #111111;
     color: #FFFFFF;
+    transform: translateY(-1px);
   }
   .cs-btn-primary:active,
   .ph-lemon-btn-primary:active,
@@ -228,7 +262,10 @@ html {
     font-weight: 600;
     white-space: nowrap;
     cursor: pointer;
-    transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    transition:
+      transform 200ms var(--ease-out),
+      background-color 180ms var(--ease-out),
+      border-color 180ms var(--ease-out);
   }
   .cs-btn-secondary:hover,
   .ph-lemon-btn-secondary:hover,
@@ -236,6 +273,7 @@ html {
   .ph-3d-white:hover {
     background-color: var(--color-paper-2);
     border-color: #FF5400;
+    transform: translateY(-1px);
   }
   .cs-btn-secondary:active,
   .ph-lemon-btn-secondary:active,
@@ -449,7 +487,91 @@ html {
   }
 
   .cs-panel-enter {
-    animation: csPanelFadeIn var(--dur-short) var(--ease-out) both;
+    animation: csPanelFadeIn 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* Spring Pop Animation for FAQ Chat Bubbles & Stacked Deck Cards */
+  .two26-spring-pop {
+    animation: two26SpringPop 380ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  /* Staggered Hero Display Line Entrance */
+  .two26-hero-line-1 {
+    animation: two26SlideUpReveal 650ms cubic-bezier(0.16, 1, 0.3, 1) 40ms both;
+  }
+  .two26-hero-line-2 {
+    animation: two26SlideUpReveal 650ms cubic-bezier(0.16, 1, 0.3, 1) 140ms both;
+  }
+  .two26-hero-line-3 {
+    animation: two26SlideUpReveal 650ms cubic-bezier(0.16, 1, 0.3, 1) 240ms both;
+  }
+
+  /* Scroll-triggered Section Reveal Classes */
+  .two26-scroll-reveal {
+    opacity: 0;
+    transform: translateY(36px) scale(0.985);
+    transition:
+      opacity 680ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 680ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .two26-scroll-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Continuous Infinite Marquee Tracks */
+  .two26-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: two26MarqueeScroll 26s linear infinite;
+  }
+  .two26-marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  .two26-showcase-track {
+    display: flex;
+    width: max-content;
+    animation: two26MarqueeScroll 34s linear infinite;
+  }
+  .two26-showcase-track:hover {
+    animation-play-state: paused;
+  }
+
+  /* Living Editorial Illustration Idle Animations */
+  .two26-float-slow {
+    animation: two26FloatBob 4.2s ease-in-out infinite;
+  }
+  .two26-float-delayed {
+    animation: two26FloatBob 4.8s ease-in-out 1.2s infinite;
+  }
+  .two26-arrow-bounce {
+    animation: two26ArrowBounce 2.2s ease-in-out infinite;
+  }
+  .two26-ribbon-pulse {
+    animation: two26RibbonDash 14s ease-in-out infinite alternate;
+  }
+
+  /* Two26 Selected Works Portrait Card Hover Brush & Lift */
+  .two26-work-card {
+    transition:
+      transform 340ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 240ms var(--ease-out),
+      box-shadow 340ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .two26-work-card:hover {
+    border-color: #FF5400;
+    transform: translateY(-6px);
+    box-shadow: 0 18px 36px -14px rgba(17, 17, 17, 0.14);
+  }
+  .two26-work-card .two26-brush-stroke {
+    stroke-dasharray: 340;
+    stroke-dashoffset: 260;
+    transition: stroke-dashoffset 520ms cubic-bezier(0.22, 1, 0.36, 1), opacity 320ms ease;
+  }
+  .two26-work-card:hover .two26-brush-stroke {
+    stroke-dashoffset: 0;
+    opacity: 0.85;
   }
 
   .cs-btn-lg {
@@ -500,11 +622,71 @@ html {
 @keyframes csPanelFadeIn {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes two26SlideUpReveal {
+  from {
+    opacity: 0;
+    transform: translateY(38px) rotate(1.5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes two26SpringPop {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes two26MarqueeScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes two26FloatBob {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes two26ArrowBounce {
+  0%,
+  100% {
+    transform: translate(160px, 48px) rotate(16deg) translateY(0px);
+  }
+  50% {
+    transform: translate(160px, 48px) rotate(16deg) translateY(-9px);
+  }
+}
+
+@keyframes two26RibbonDash {
+  0% {
+    stroke-dashoffset: 180;
+  }
+  100% {
+    stroke-dashoffset: 0;
   }
 }
 
@@ -531,7 +713,7 @@ input[type="range"].ph-slider::-webkit-slider-thumb {
 }
 
 input[type="range"].ph-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.12);
+  transform: scale(1.15);
 }
 
 ::-webkit-scrollbar {

@@ -186,9 +186,26 @@ export const LoginPage: React.FC = () => {
         aria-hidden="true"
       >
         <path
+          className="two26-ribbon-pulse"
+          strokeDasharray="900"
           d="M340 30 C 160 40, 110 170, 210 230 C 280 270, 310 170, 210 150 C 110 130, 110 260, 330 300"
           stroke="#FF5400"
           strokeWidth="26"
+          strokeLinecap="round"
+        />
+      </svg>
+      <svg
+        className="pointer-events-none absolute -left-24 -bottom-12 w-72 h-72 opacity-85"
+        viewBox="0 0 320 320"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          className="two26-ribbon-pulse"
+          strokeDasharray="900"
+          d="M-30 290 C 140 270, 190 150, 100 90 C 30 50, -10 150, 90 170 C 190 190, 190 60, -20 20"
+          stroke="#FF5400"
+          strokeWidth="24"
           strokeLinecap="round"
         />
       </svg>
@@ -218,17 +235,17 @@ export const LoginPage: React.FC = () => {
       <div className="my-8 flex flex-col items-center justify-center relative z-10">
         <div className="text-center mb-6 relative">
           <span
-            className="two26-sticker-pill text-xs mb-3 inline-flex"
+            className="two26-sticker-pill two26-float-slow text-xs mb-3 inline-flex"
             style={{ transform: 'rotate(-3deg)' }}
           >
             {isSignup ? 'Free Early Access · All 8 Stages' : 'Welcome back to the Studio'}
           </span>
-          <h1 className="two26-display text-5xl sm:text-6xl text-[#FF5400]">
+          <h1 className="two26-display two26-hero-line-1 text-5xl sm:text-6xl text-[#FF5400]">
             {isSignup ? 'CREATE YOUR ACCOUNT' : 'ENTER THE WORKSPACE'}
           </h1>
         </div>
 
-        <main className="w-full max-w-md bg-[#FFFFFF] border-2 border-[#111111] rounded-[28px] p-6 sm:p-8 cs-panel-enter">
+        <main className="w-full max-w-md bg-[#FFFFFF] border-2 border-[#111111] rounded-[28px] p-6 sm:p-8 two26-spring-pop">
           <div
             className="grid grid-cols-2 bg-[#F8EEE8] p-1 rounded-full border border-[#DFCFC6] mb-6"
             role="tablist"

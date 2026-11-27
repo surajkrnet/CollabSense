@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Check,
@@ -15,7 +15,6 @@ import {
   ArrowLeft,
   ArrowRight,
   RotateCcw,
-  Sparkles,
   X,
   ShieldCheck,
   Terminal,
@@ -128,6 +127,33 @@ const STAGES: StageShowcaseItem[] = [
   },
 ];
 
+const MANIFESTO_SEGMENTS: {
+  pillar: 'citations' | 'math' | 'latency';
+  words: string[];
+}[] = [
+  {
+    pillar: 'citations',
+    words:
+      'We built CollabSense so product teams never ship a roadmap based on hallucinated AI quotes or dropped CSV rows.'.split(
+        ' '
+      ),
+  },
+  {
+    pillar: 'math',
+    words:
+      'Models do the qualitative reading, while pure deterministic code computes every RICE, WSJF, ICE, MoSCoW, and Kano score.'.split(
+        ' '
+      ),
+  },
+  {
+    pillar: 'latency',
+    words:
+      'And with our 3-tier NVIDIA NIM & OpenRouter failover engine, you go from raw tickets to an approved Gherkin PRD in under 90 seconds.'.split(
+        ' '
+      ),
+  },
+];
+
 const SERVICE_RIBBON_ITEMS = [
   {
     leftWord: 'MULTI-MODEL',
@@ -135,7 +161,7 @@ const SERVICE_RIBBON_ITEMS = [
     badge: '7.5s',
     pillText:
       'Kimi K3.1 Pro on NVIDIA NIM with a strict 7.5s wall-clock cap and instant failover to Nemotron 3.5 Super VL 120B & OpenRouter :free models.',
-    tilt: '-2deg',
+    tilt: '-1.5deg',
   },
   {
     leftWord: 'DETERMINISTIC',
@@ -143,7 +169,7 @@ const SERVICE_RIBBON_ITEMS = [
     badge: '0.00%',
     pillText:
       'LLMs never touch arithmetic. RICE, WSJF, ICE, MoSCoW, and Kano execute exclusively in pure Python and 60fps TypeScript.',
-    tilt: '2.5deg',
+    tilt: '1.8deg',
   },
   {
     leftWord: 'VERIFIED',
@@ -151,7 +177,7 @@ const SERVICE_RIBBON_ITEMS = [
     badge: '100%',
     pillText:
       'Every cited ticket ID is cross-checked against your uploaded batch; hallucinated IDs and fake $0 ARR labels are stripped automatically.',
-    tilt: '-1.5deg',
+    tilt: '-1.2deg',
   },
   {
     leftWord: 'LIVE GHERKIN',
@@ -159,7 +185,7 @@ const SERVICE_RIBBON_ITEMS = [
     badge: 'AC-01',
     pillText:
       'Co-author engineering-ready specs with real-time section diff highlighting, multi-step undo stack, and 1-click Linear GraphQL export.',
-    tilt: '2deg',
+    tilt: '1.5deg',
   },
 ];
 
@@ -196,6 +222,16 @@ export const LandingPage: React.FC = () => {
   const [openFaqIdx, setOpenFaqIdx] = useState<number>(0);
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
+  // Scroll & Mouse Kinetic State (Two26 Studio ScrollTrigger + SplitText Homage)
+  const [pageScrollPct, setPageScrollPct] = useState<number>(0);
+  const [manifestoScrollRatio, setManifestoScrollRatio] = useState<number>(0.65);
+  const [servicesPathRatio, setServicesPathRatio] = useState<number>(0.45);
+  const [activeNavSection, setActiveNavSection] = useState<string>('top');
+  const [heroMouse, setHeroMouse] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  const manifestoRef = useRef<HTMLElement | null>(null);
+  const servicesRef = useRef<HTMLElement | null>(null);
+
   // Interactive Deterministic RICE Lab state
   const [demoReach, setDemoReach] = useState(12);
   const [demoImpact, setDemoImpact] = useState(2.9);
@@ -206,6 +242,71 @@ export const LandingPage: React.FC = () => {
     liveRice >= 10 && demoImpact >= 2.0 ? 'MUST' : liveRice >= 5 ? 'SHOULD' : liveRice >= 2 ? 'COULD' : 'WONT';
 
   const cliCommand = 'npx @collabsense/triage ingest --source=zendesk,discord,linear --schema=strict';
+
+  // Scroll-scrubbed progress for Manifesto word reveal, Services winding SVG path draw, & IntersectionObserver reveals
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      setPageScrollPct(Math.min(100, Math.max(0, (scrollY / docHeight) * 100)));
+
+      const vh = Math.max(1, window.innerHeight);
+
+      if (manifestoRef.current) {
+        const rect = manifestoRef.current.getBoundingClientRect();
+        // Start revealing when section top enters 85% viewport height; finish at 20%
+        const raw = (vh * 0.85 - rect.top) / Math.max(1, vh * 0.65 + rect.height * 0.35);
+        setManifestoScrollRatio(Math.min(1, Math.max(0.18, raw)));
+      }
+
+      if (servicesRef.current) {
+        const rect = servicesRef.current.getBoundingClientRect();
+        const raw = (vh * 0.8 - rect.top) / Math.max(1, rect.height * 0.9);
+        setServicesPathRatio(Math.min(1, Math.max(0.12, raw)));
+      }
+
+      // Active section tracker for top navbar pills
+      const sectionOrder = ['faq-section', 'step-mcp', 'step-data-in', 'product-os', 'top'];
+      for (const secId of sectionOrder) {
+        const el = document.getElementById(secId);
+        if (el && el.getBoundingClientRect().top <= vh * 0.38) {
+          setActiveNavSection(secId);
+          break;
+        }
+      }
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    const revealEls = document.querySelectorAll('.two26-scroll-reveal');
+    revealEls.forEach((el) => observer.observe(el));
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+      observer.disconnect();
+    };
+  }, [stageFilter]);
+
+  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const nx = ((e.clientX - rect.left) / Math.max(1, rect.width) - 0.5) * 2;
+    const ny = ((e.clientY - rect.top) / Math.max(1, rect.height) - 0.5) * 2;
+    setHeroMouse({ x: Number(nx.toFixed(3)), y: Number(ny.toFixed(3)) });
+  };
 
   const handleCopyCli = async () => {
     try {
@@ -253,24 +354,58 @@ export const LandingPage: React.FC = () => {
   ];
 
   const visibleStages = STAGES.filter((s) => stageFilter === 'all' || s.phase === stageFilter);
+  const totalManifestoWords = MANIFESTO_SEGMENTS.reduce((acc, seg) => acc + seg.words.length, 0);
+  let runningWordIdx = 0;
 
   return (
     <PostHogDesktopShell onQuickJumpSection={handleQuickJump}>
+      {/* TOP SCROLL PROGRESS LINE (#FF5400) */}
+      <div className="fixed top-0 inset-x-0 h-1 z-50 bg-transparent pointer-events-none">
+        <div
+          className="h-full bg-[#FF5400] transition-[width] duration-100 ease-out"
+          style={{ width: `${pageScrollPct}%` }}
+        />
+      </div>
+
       {/* FIXED TOP TWO26 STUDIO PILL NAVBAR */}
       <header className="fixed top-4 inset-x-3 sm:inset-x-6 z-40 pointer-events-none">
         <div className="max-w-[1400px] mx-auto flex items-center justify-between gap-3">
-          {/* Left Floating White Pills */}
+          {/* Left Floating White Pills with Active Section Highlight */}
           <nav aria-label="Primary sections" className="flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
-            <button type="button" onClick={() => handleQuickJump('product-os')} className="two26-nav-pill">
+            <button
+              type="button"
+              onClick={() => handleQuickJump('product-os')}
+              className={`two26-nav-pill ${
+                activeNavSection === 'product-os' ? '!bg-[#111111] !text-[#FFFFFF]' : ''
+              }`}
+            >
               Workflow
             </button>
-            <button type="button" onClick={() => handleQuickJump('step-data-in')} className="two26-nav-pill">
+            <button
+              type="button"
+              onClick={() => handleQuickJump('step-data-in')}
+              className={`two26-nav-pill ${
+                activeNavSection === 'step-data-in' ? '!bg-[#111111] !text-[#FFFFFF]' : ''
+              }`}
+            >
               Scoring Lab
             </button>
-            <button type="button" onClick={() => handleQuickJump('step-mcp')} className="two26-nav-pill hidden md:inline-flex">
+            <button
+              type="button"
+              onClick={() => handleQuickJump('step-mcp')}
+              className={`two26-nav-pill hidden md:inline-flex ${
+                activeNavSection === 'step-mcp' ? '!bg-[#111111] !text-[#FFFFFF]' : ''
+              }`}
+            >
               Live Specs
             </button>
-            <button type="button" onClick={() => handleQuickJump('faq-section')} className="two26-nav-pill hidden lg:inline-flex">
+            <button
+              type="button"
+              onClick={() => handleQuickJump('faq-section')}
+              className={`two26-nav-pill hidden lg:inline-flex ${
+                activeNavSection === 'faq-section' ? '!bg-[#111111] !text-[#FFFFFF]' : ''
+              }`}
+            >
               FAQ
             </button>
           </nav>
@@ -280,7 +415,7 @@ export const LandingPage: React.FC = () => {
             type="button"
             onClick={() => handleQuickJump('top')}
             aria-label="CollabSense, back to top"
-            className="pointer-events-auto bg-[#F9E2E1]/90 backdrop-blur-md px-4 py-1.5 rounded-full border border-[#111111]/10 hover:scale-[1.02] transition-transform"
+            className="pointer-events-auto bg-[#F9E2E1]/90 backdrop-blur-md px-4 py-1.5 rounded-full border border-[#111111]/10 hover:scale-[1.03] transition-transform"
           >
             <PostHogBrandMark size="md" textLabel="COLLABSENSE" />
           </button>
@@ -319,7 +454,7 @@ export const LandingPage: React.FC = () => {
               aria-label="Open quick studio launcher"
               className="two26-nav-pill hidden sm:inline-flex border-[#FF5400] px-3.5"
             >
-              <span className="w-2 h-2 rounded-full bg-[#FF5400]" />
+              <span className="w-2 h-2 rounded-full bg-[#FF5400] animate-ping" />
               <span>Studio Menu</span>
             </button>
           </div>
@@ -327,18 +462,27 @@ export const LandingPage: React.FC = () => {
       </header>
 
       {/* =====================================================================
-          SECTION 1: TWO26 HERO (#F9E2E1 BLUSH CANVAS + GIANT #FF5400 CONDENSED
-          DISPLAY + ROTATED BLACK STICKER PILLS + EDITORIAL LINE-ART & DOSSIER)
+          SECTION 1: TWO26 HERO (#F9E2E1 BLUSH CANVAS + MOUSE PARALLAX STICKERS
+          + LIVING LINE-ART ILLUSTRATION + CURVED INFINITE MARQUEE RIBBON)
          ===================================================================== */}
-      <section id="top" className="two26-blush-surface relative pt-28 sm:pt-36 pb-0 overflow-hidden">
-        {/* Decorative Edge-Bleeding #FF5400 Looping Ribbons (Left & Right) */}
+      <section
+        id="top"
+        onMouseMove={handleHeroMouseMove}
+        className="two26-blush-surface relative pt-28 sm:pt-36 pb-0 overflow-hidden"
+      >
+        {/* Decorative Edge-Bleeding #FF5400 Looping Ribbons with Parallax & Stroke Pulse */}
         <svg
-          className="pointer-events-none absolute -left-24 top-16 w-72 sm:w-96 h-96 opacity-95"
+          className="pointer-events-none absolute -left-24 top-16 w-72 sm:w-96 h-96 opacity-95 transition-transform duration-300 ease-out"
+          style={{
+            transform: `translate3d(${heroMouse.x * -14}px, ${heroMouse.y * -10}px, 0)`,
+          }}
           viewBox="0 0 320 380"
           fill="none"
           aria-hidden="true"
         >
           <path
+            className="two26-ribbon-pulse"
+            strokeDasharray="900"
             d="M-40 30 C 140 30, 210 160, 110 230 C 30 280, -20 180, 90 150 C 200 120, 240 280, 80 360"
             stroke="#FF5400"
             strokeWidth="26"
@@ -346,12 +490,17 @@ export const LandingPage: React.FC = () => {
           />
         </svg>
         <svg
-          className="pointer-events-none absolute -right-24 top-10 w-72 sm:w-96 h-96 opacity-95"
+          className="pointer-events-none absolute -right-24 top-10 w-72 sm:w-96 h-96 opacity-95 transition-transform duration-300 ease-out"
+          style={{
+            transform: `translate3d(${heroMouse.x * 14}px, ${heroMouse.y * 10}px, 0)`,
+          }}
           viewBox="0 0 320 380"
           fill="none"
           aria-hidden="true"
         >
           <path
+            className="two26-ribbon-pulse"
+            strokeDasharray="900"
             d="M350 20 C 170 50, 110 190, 220 260 C 290 300, 330 190, 210 160 C 120 140, 110 290, 340 340"
             stroke="#FF5400"
             strokeWidth="26"
@@ -368,31 +517,37 @@ export const LandingPage: React.FC = () => {
             </span>
           </div>
 
-          {/* Giant Centered #FF5400 Condensed Display Headline with Rotated Black Sticker Pills */}
+          {/* Giant Centered #FF5400 Condensed Display Headline with Interactive Parallax Black Sticker Pills */}
           <div className="relative mt-6 mx-auto max-w-5xl text-center">
             <span
               className="two26-sticker-pill hidden sm:inline-flex absolute -top-4 left-[8%] md:left-[14%] z-20 shadow-sm"
-              style={{ transform: 'rotate(-6deg)' }}
+              style={{
+                transform: `translate3d(${heroMouse.x * 16}px, ${heroMouse.y * 12}px, 0) rotate(-6deg)`,
+              }}
             >
               0.00% LLM math drift
             </span>
 
             <span
               className="two26-sticker-pill hidden sm:inline-flex absolute top-[36%] right-[4%] md:right-[10%] z-20 shadow-sm"
-              style={{ transform: 'rotate(4deg)' }}
+              style={{
+                transform: `translate3d(${heroMouse.x * -18}px, ${heroMouse.y * 14}px, 0) rotate(4deg)`,
+              }}
             >
               No hallucinated citations
             </span>
 
             <h1 className="two26-display text-[#FF5400] text-[3.5rem] sm:text-[5.5rem] md:text-[7.2rem] lg:text-[8.4rem] select-none">
-              <span className="block">LOOKING</span>
-              <span className="block">SUSPICIOUSLY</span>
-              <span className="block">GOOD AT SPECS</span>
+              <span className="block two26-hero-line-1">LOOKING</span>
+              <span className="block two26-hero-line-2">SUSPICIOUSLY</span>
+              <span className="block two26-hero-line-3">GOOD AT SPECS</span>
             </h1>
 
             <span
               className="two26-sticker-pill inline-flex mt-3 sm:mt-0 sm:absolute sm:-bottom-3 sm:left-[54%] z-20 shadow-sm"
-              style={{ transform: 'rotate(-4deg)' }}
+              style={{
+                transform: `translate3d(${heroMouse.x * 14}px, ${heroMouse.y * -12}px, 0) rotate(-4deg)`,
+              }}
             >
               No funny business · &lt;7.5s failover
             </span>
@@ -437,7 +592,7 @@ export const LandingPage: React.FC = () => {
 
           {/* Two26 Editorial Character + Cat Illustration & Live Interactive Triage Dossier */}
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
-            {/* Left/Center: Custom Two26-Style Editorial Vector Illustration (2 Architects + 2 Studio Cats) */}
+            {/* Left/Center: Custom Two26-Style Editorial Vector Illustration with Living Idle Motion */}
             <div className="lg:col-span-7 flex justify-center">
               <svg
                 viewBox="0 0 760 350"
@@ -446,7 +601,7 @@ export const LandingPage: React.FC = () => {
                 aria-label="Two26 style editorial illustration of product architects carrying SIGNAL and PRD 26 boards with two studio cats"
               >
                 {/* Left Walking Orange Cat */}
-                <g transform="translate(24, 215)">
+                <g className="two26-float-delayed" transform="translate(24, 215)">
                   <path
                     d="M15 88 L35 62 L95 62 L115 88 L103 92 L88 74 L44 74 L26 92 Z"
                     fill="#FF5400"
@@ -468,13 +623,11 @@ export const LandingPage: React.FC = () => {
                     strokeWidth="2.5"
                     strokeLinejoin="round"
                   />
-                  {/* Tiger stripes */}
                   <path d="M52 63 L56 73 M66 63 L70 73 M80 63 L84 73" stroke="#111111" strokeWidth="2.2" />
                 </g>
 
                 {/* Left Architect carrying "SIGNAL" Board */}
-                <g transform="translate(185, 32)">
-                  {/* Legs */}
+                <g className="two26-float-slow" transform="translate(185, 32)">
                   <path
                     d="M72 185 L44 275 L72 282 L94 205 L116 282 L144 282 L124 185 Z"
                     fill="#F8EEE8"
@@ -482,17 +635,14 @@ export const LandingPage: React.FC = () => {
                     strokeWidth="2.5"
                     strokeLinejoin="round"
                   />
-                  {/* Black platform sneakers */}
                   <rect x="34" y="275" width="44" height="18" rx="6" fill="#111111" />
                   <rect x="112" y="278" width="46" height="16" rx="6" fill="#111111" />
-                  {/* Head & Sunglasses */}
                   <circle cx="104" cy="42" r="22" fill="#F8EEE8" stroke="#111111" strokeWidth="2.5" />
                   <path
                     d="M84 32 C 84 14, 122 12, 128 28 C 118 28, 96 28, 84 32 Z"
                     fill="#111111"
                   />
                   <rect x="102" y="36" width="22" height="11" rx="2" fill="#111111" />
-                  {/* Jacket & Sign Board */}
                   <g transform="rotate(-7 104 135)">
                     <rect
                       x="26"
@@ -516,7 +666,6 @@ export const LandingPage: React.FC = () => {
                       SIGNAL
                     </text>
                   </g>
-                  {/* Orange Sleeve over board */}
                   <path
                     d="M86 68 L118 68 L122 162 L92 162 Z"
                     fill="#FF5400"
@@ -527,8 +676,7 @@ export const LandingPage: React.FC = () => {
                 </g>
 
                 {/* Right Architect carrying "SPEC 26" Board */}
-                <g transform="translate(410, 24)">
-                  {/* Flared Orange Trousers */}
+                <g className="two26-float-delayed" transform="translate(410, 24)">
                   <path
                     d="M66 175 L24 282 L68 292 L98 205 L132 288 L174 274 L122 175 Z"
                     fill="#FF5400"
@@ -536,10 +684,8 @@ export const LandingPage: React.FC = () => {
                     strokeWidth="2.5"
                     strokeLinejoin="round"
                   />
-                  {/* White platform shoes */}
                   <rect x="18" y="282" width="52" height="16" rx="6" fill="#F8EEE8" stroke="#111111" strokeWidth="2.5" />
                   <rect x="132" y="276" width="50" height="16" rx="6" fill="#F8EEE8" stroke="#111111" strokeWidth="2.5" />
-                  {/* Head & Flowing Hair */}
                   <circle cx="96" cy="44" r="22" fill="#F8EEE8" stroke="#111111" strokeWidth="2.5" />
                   <path
                     d="M72 34 C 58 45, 58 76, 76 86 C 84 72, 82 48, 96 24 Z"
@@ -547,7 +693,6 @@ export const LandingPage: React.FC = () => {
                     stroke="#111111"
                     strokeWidth="2.5"
                   />
-                  {/* Sign Board */}
                   <g transform="rotate(4 102 132)">
                     <rect
                       x="22"
@@ -571,7 +716,6 @@ export const LandingPage: React.FC = () => {
                       SPEC 26
                     </text>
                   </g>
-                  {/* Cream Arm holding board */}
                   <path
                     d="M74 72 L106 72 L114 152 L84 152 Z"
                     fill="#F8EEE8"
@@ -582,7 +726,7 @@ export const LandingPage: React.FC = () => {
                 </g>
 
                 {/* Right Black & White Studio Cat */}
-                <g transform="translate(612, 208)">
+                <g className="two26-float-slow" transform="translate(612, 208)">
                   <path
                     d="M18 96 L36 66 L94 66 L112 96 L98 98 L84 78 L46 78 L30 98 Z"
                     fill="#F8EEE8"
@@ -608,7 +752,7 @@ export const LandingPage: React.FC = () => {
 
             {/* Right: Live Interactive Triage Dossier Card */}
             <div className="lg:col-span-5 pb-6">
-              <figure className="bg-[#FFFFFF] border-2 border-[#111111] rounded-[24px] p-6 relative">
+              <figure className="bg-[#FFFFFF] border-2 border-[#111111] rounded-[24px] p-6 relative transition-transform duration-300 hover:-translate-y-1">
                 <span
                   className="two26-sticker-pill absolute -top-3.5 right-5 text-xs"
                   style={{ transform: 'rotate(3deg)' }}
@@ -671,27 +815,34 @@ export const LandingPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Iconic Two26 Curved #FF5400 Marquee Ribbon at Bottom of Hero */}
+        {/* Iconic Two26 Continuous Infinite #FF5400 Marquee Ribbon at Bottom of Hero */}
         <div className="relative mt-6 bg-[#FF5400] text-[#FFFFFF] py-5 border-y-2 border-[#111111] overflow-hidden">
-          <div className="two26-display text-2xl sm:text-4xl tracking-wider whitespace-nowrap flex items-center justify-around gap-8 px-4">
-            <span>ZERO LLM MATH DRIFT</span>
-            <span>•</span>
-            <span>RFC-4180 2,000-ROW CSV PARSER</span>
-            <span>•</span>
-            <span>TOP 3 + N VERIFIED CITATIONS</span>
-            <span>•</span>
-            <span>LIVE GHERKIN PRD CO-PILOT</span>
-            <span>•</span>
-            <span>&lt;7.5S AUTOMATIC FAILOVER</span>
+          <div className="two26-marquee-track two26-display text-2xl sm:text-4xl tracking-wider whitespace-nowrap">
+            {[0, 1].map((dup) => (
+              <div key={dup} className="flex items-center gap-10 px-5">
+                <span>ZERO LLM MATH DRIFT</span>
+                <span>•</span>
+                <span>RFC-4180 2,000-ROW CSV PARSER</span>
+                <span>•</span>
+                <span>TOP 3 + N VERIFIED CITATIONS</span>
+                <span>•</span>
+                <span>LIVE GHERKIN PRD CO-PILOT</span>
+                <span>•</span>
+                <span>&lt;7.5S AUTOMATIC FAILOVER</span>
+                <span>•</span>
+                <span>GOOD LOOKS INCLUDED</span>
+                <span>•</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* =====================================================================
           SECTION 2: TWO26 EDITORIAL MANIFESTO ("A BIT ABOUT COLLABSENSE")
-          WITH INTERACTIVE COLOR-REVEAL PILLARS
+          WITH SCROLL-SCRUBBED WORD-BY-WORD COLOR REVEAL + PILLAR FILTERS
          ===================================================================== */}
-      <section className="desk-surface py-20 sm:py-28 px-4 sm:px-8">
+      <section ref={manifestoRef} className="desk-surface py-20 sm:py-28 px-4 sm:px-8">
         <div className="max-w-[1120px] mx-auto text-center space-y-8">
           <div className="space-y-3">
             <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#111111]">
@@ -700,7 +851,7 @@ export const LandingPage: React.FC = () => {
             <div className="flex flex-wrap items-center justify-center gap-2">
               {(
                 [
-                  { id: 'all', label: 'All Architecture Pillars' },
+                  { id: 'all', label: 'Scroll Reveal (All Pillars)' },
                   { id: 'math', label: '0.00% Math Drift' },
                   { id: 'citations', label: 'Anti-Hallucination Citations' },
                   { id: 'latency', label: '<7.5s Multi-Model Failover' },
@@ -712,7 +863,7 @@ export const LandingPage: React.FC = () => {
                   onClick={() => setManifestoFocus(tab.id)}
                   className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                     manifestoFocus === tab.id
-                      ? 'bg-[#FF5400] text-white'
+                      ? 'bg-[#FF5400] text-white scale-105'
                       : 'bg-[#EFE3DC] text-[#111111] hover:bg-[#111111] hover:text-white'
                   }`}
                 >
@@ -722,44 +873,73 @@ export const LandingPage: React.FC = () => {
             </div>
           </div>
 
-          <p className="text-2xl sm:text-4xl md:text-[2.75rem] font-extrabold leading-[1.18] tracking-tight max-w-[1020px] mx-auto">
-            <span
-              className={`transition-colors duration-300 ${
-                manifestoFocus === 'all' || manifestoFocus === 'citations'
-                  ? 'text-[#FF5400]'
-                  : 'text-[#FF5400]/35'
-              }`}
-            >
-              We built CollabSense so product teams never ship a roadmap based on hallucinated AI quotes or dropped CSV rows.{' '}
-            </span>
-            <span
-              className={`transition-colors duration-300 ${
-                manifestoFocus === 'all' || manifestoFocus === 'math'
-                  ? 'text-[#FF5400]'
-                  : 'text-[#FF5400]/35'
-              }`}
-            >
-              Models do the qualitative reading, while pure deterministic code computes every RICE, WSJF, ICE, MoSCoW, and Kano score.{' '}
-            </span>
-            <span
-              className={`transition-colors duration-300 ${
-                manifestoFocus === 'all' || manifestoFocus === 'latency'
-                  ? 'text-[#FF5400]'
-                  : 'text-[#FF5400]/35'
-              }`}
-            >
-              And with our 3-tier NVIDIA NIM &amp; OpenRouter failover engine, you go from raw tickets to an approved Gherkin PRD in under 90 seconds.
-            </span>
+          {/* Scroll-Scrubbed Word-by-Word Color Reveal (Two26 SplitText Effect) */}
+          <p className="text-2xl sm:text-4xl md:text-[2.75rem] font-extrabold leading-[1.2] tracking-tight max-w-[1040px] mx-auto">
+            {MANIFESTO_SEGMENTS.map((seg) => (
+              <React.Fragment key={seg.pillar}>
+                {seg.words.map((word, wIdx) => {
+                  const globalIdx = runningWordIdx++;
+                  const wordThreshold = globalIdx / Math.max(1, totalManifestoWords);
+                  const isLit =
+                    manifestoFocus === 'all'
+                      ? manifestoScrollRatio >= wordThreshold
+                      : manifestoFocus === seg.pillar;
+
+                  return (
+                    <span
+                      key={`${seg.pillar}-${wIdx}`}
+                      className="inline-block mr-[0.26em] transition-colors duration-200"
+                      style={{
+                        color: isLit ? '#FF5400' : 'rgba(255, 84, 0, 0.25)',
+                      }}
+                    >
+                      {word}
+                    </span>
+                  );
+                })}
+              </React.Fragment>
+            ))}
           </p>
+        </div>
+
+        {/* Continuous Horizontal Showcase Slider Strip (.section-slider-showcase homage) */}
+        <div className="mt-16 overflow-hidden py-4">
+          <div className="two26-showcase-track gap-4 px-2">
+            {[...STAGES, ...STAGES].map((st, idx) => {
+              const Icon = st.icon;
+              return (
+                <button
+                  key={`${st.slug}-ticker-${idx}`}
+                  type="button"
+                  onClick={() => openAppModule(st.slug)}
+                  className="w-72 shrink-0 text-left rounded-[22px] bg-[#FFFFFF] border border-[#DFCFC6] hover:border-[#FF5400] p-4 transition-transform duration-200 hover:-translate-y-1.5 flex flex-col justify-between gap-3"
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="two26-sticker-pill text-[11px] px-2.5 py-0.5">
+                      STAGE {st.num}
+                    </span>
+                    <span className="w-8 h-8 rounded-full bg-[#F9E2E1] text-[#FF5400] flex items-center justify-center">
+                      <Icon className="w-4 h-4" />
+                    </span>
+                  </div>
+                  <div>
+                    <div className="two26-display text-2xl text-[#111111] truncate">{st.title}</div>
+                    <div className="text-[11px] font-bold text-[#FF5400] mt-0.5">{st.metricBadge}</div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* =====================================================================
           SECTION 3: SELECTED WORKS — THE 8-STAGE PRODUCT DISCOVERY GRID
+          WITH STAGGERED SCROLL REVEAL & HOVER BRUSH-STROKE ANIMATION
          ===================================================================== */}
       <section id="product-os" className="desk-surface py-16 sm:py-24 px-4 sm:px-8">
         <div className="max-w-[1400px] mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 two26-scroll-reveal is-visible">
             <div>
               <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#111111]">
                 FEATURED WORKFLOW MODULES
@@ -782,9 +962,9 @@ export const LandingPage: React.FC = () => {
                   key={f.id}
                   type="button"
                   onClick={() => setStageFilter(f.id)}
-                  className={`px-4 py-2 rounded-full text-xs font-bold transition-colors ${
+                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
                     stageFilter === f.id
-                      ? 'bg-[#111111] text-white'
+                      ? 'bg-[#111111] text-white scale-105'
                       : 'bg-[#FFFFFF] text-[#111111] border border-[#DFCFC6] hover:border-[#FF5400]'
                   }`}
                 >
@@ -796,31 +976,33 @@ export const LandingPage: React.FC = () => {
 
           {/* Two26 Selected Works Portrait Card Grid */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
-            {visibleStages.map((s) => {
+            {visibleStages.map((s, idx) => {
               const Icon = s.icon;
               return (
                 <button
                   key={s.slug}
                   type="button"
                   onClick={() => openAppModule(s.slug)}
-                  className="group text-left flex flex-col justify-between rounded-[24px] bg-[#FFFFFF] border border-[#DFCFC6] hover:border-[#FF5400] p-4 transition-all duration-200 hover:-translate-y-1.5"
+                  style={{ transitionDelay: `${idx * 45}ms` }}
+                  className="two26-work-card two26-scroll-reveal is-visible group text-left flex flex-col justify-between rounded-[24px] bg-[#FFFFFF] border border-[#DFCFC6] p-4"
                 >
-                  {/* Visual Preview Container (Two26 Rounded Artwork Frame) */}
+                  {/* Visual Preview Container (Two26 Rounded Artwork Frame with Animated Brush Reveal) */}
                   <div
                     className="w-full rounded-[18px] p-5 relative overflow-hidden border border-[#111111]/10 flex flex-col justify-between min-h-[210px]"
                     style={{ backgroundColor: s.accentBg }}
                   >
-                    {/* Subtle Hover Brush Accent */}
+                    {/* Animated SVG Brush Stroke on Hover */}
                     <svg
                       viewBox="0 0 240 120"
-                      className="pointer-events-none absolute -right-8 -bottom-8 w-44 h-28 opacity-25 group-hover:opacity-60 transition-opacity"
+                      className="pointer-events-none absolute -right-6 -bottom-6 w-48 h-32"
                       fill="none"
                       aria-hidden="true"
                     >
                       <path
-                        d="M10 100 C 70 20, 150 20, 220 90"
+                        className="two26-brush-stroke opacity-35"
+                        d="M10 100 C 70 15, 150 15, 225 90"
                         stroke="#FF5400"
-                        strokeWidth="28"
+                        strokeWidth="30"
                         strokeLinecap="round"
                       />
                     </svg>
@@ -829,7 +1011,7 @@ export const LandingPage: React.FC = () => {
                       <span className="two26-sticker-pill text-xs px-3 py-1">
                         STAGE {s.num}
                       </span>
-                      <span className="w-10 h-10 rounded-full bg-[#FFFFFF] border border-[#111111] flex items-center justify-center text-[#FF5400]">
+                      <span className="w-10 h-10 rounded-full bg-[#FFFFFF] border border-[#111111] flex items-center justify-center text-[#FF5400] group-hover:bg-[#FF5400] group-hover:text-white transition-colors">
                         <Icon className="w-5 h-5" aria-hidden="true" />
                       </span>
                     </div>
@@ -860,7 +1042,7 @@ export const LandingPage: React.FC = () => {
                       </div>
                     </div>
 
-                    <span className="w-9 h-9 rounded-full bg-[#FF5400] text-[#FFFFFF] flex items-center justify-center shrink-0 group-hover:bg-[#111111] group-hover:rotate-12 transition-all">
+                    <span className="w-9 h-9 rounded-full bg-[#FF5400] text-[#FFFFFF] flex items-center justify-center shrink-0 group-hover:bg-[#111111] group-hover:rotate-45 transition-all">
                       <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
                     </span>
                   </div>
@@ -869,24 +1051,24 @@ export const LandingPage: React.FC = () => {
             })}
           </div>
 
-          {/* Iconic Two26 Giant #FF5400 Callout with 3 Rotated Black Sticker Pills */}
-          <div className="mt-20 sm:mt-28 text-center relative max-w-3xl mx-auto">
+          {/* Iconic Two26 Giant #FF5400 Callout with 3 Floating Rotated Black Sticker Pills */}
+          <div className="mt-20 sm:mt-28 text-center relative max-w-3xl mx-auto two26-scroll-reveal is-visible">
             <span
-              className="two26-sticker-pill hidden sm:inline-flex absolute -top-3 left-[10%] z-20"
+              className="two26-sticker-pill two26-float-slow hidden sm:inline-flex absolute -top-3 left-[10%] z-20"
               style={{ transform: 'rotate(-7deg)' }}
             >
               The plot thickens
             </span>
 
             <span
-              className="two26-sticker-pill hidden sm:inline-flex absolute top-[44%] left-[26%] z-20"
+              className="two26-sticker-pill two26-float-delayed hidden sm:inline-flex absolute top-[44%] left-[26%] z-20"
               style={{ transform: 'rotate(3deg)' }}
             >
               19/19 Pytest verified
             </span>
 
             <span
-              className="two26-sticker-pill hidden sm:inline-flex absolute bottom-[16%] right-[14%] z-20"
+              className="two26-sticker-pill two26-float-slow hidden sm:inline-flex absolute bottom-[16%] right-[14%] z-20"
               style={{ transform: 'rotate(-4deg)' }}
             >
               There&apos;s more inside
@@ -917,11 +1099,15 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* =====================================================================
-          SECTION 4: TWO26 SERVICES RIBBON ("THIS IS OUR THING") +
-          INTERACTIVE DETERMINISTIC RICE SCORING LAB
+          SECTION 4: TWO26 SERVICES RIBBON ("THIS IS OUR THING") WITH
+          SCROLL-DRIVEN WINDING #FF5400 SVG PATH DRAW + LIVE RICE LAB
          ===================================================================== */}
-      <section id="step-data-in" className="desk-surface py-20 sm:py-28 px-4 sm:px-8 relative overflow-hidden">
-        <div className="max-w-[1400px] mx-auto">
+      <section
+        id="step-data-in"
+        ref={servicesRef}
+        className="desk-surface py-20 sm:py-28 px-4 sm:px-8 relative overflow-hidden"
+      >
+        <div className="max-w-[1400px] mx-auto relative">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
             <div className="lg:col-span-3">
               <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#111111]">
@@ -936,37 +1122,70 @@ export const LandingPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Winding #FF5400 Service Rows with Inline Badges & Tilted Description Pills */}
-          <div className="mt-14 relative space-y-6">
-            {SERVICE_RIBBON_ITEMS.map((item, idx) => (
-              <div
-                key={item.leftWord}
-                className="rounded-[24px] bg-[#FBF6F3] border border-[#DFCFC6] p-5 sm:p-7 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
-              >
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="two26-display text-3xl sm:text-5xl text-[#FF5400]">
-                    {item.leftWord}
-                  </span>
-                  <span className="inline-flex items-center justify-center px-3.5 py-1 rounded-full bg-[#111111] text-[#FFFFFF] font-mono text-sm font-extrabold border-2 border-[#FF5400]">
-                    {item.badge}
-                  </span>
-                  <span className="two26-display text-3xl sm:text-5xl text-[#FF5400]">
-                    {item.rightWord}
-                  </span>
-                </div>
+          {/* Scroll-Scrubbed Winding #FF5400 SVG Ribbon Behind Service Rows */}
+          <div className="mt-14 relative">
+            <svg
+              viewBox="0 0 1200 540"
+              className="pointer-events-none hidden lg:block absolute inset-0 w-full h-full z-0"
+              fill="none"
+              aria-hidden="true"
+            >
+              {/* Soft background guide track */}
+              <path
+                d="M 1180 20 C 780 60, 320 120, 480 210 C 640 300, 960 280, 620 390 C 340 480, 120 490, 20 520"
+                stroke="#FF5400"
+                strokeOpacity="0.18"
+                strokeWidth="18"
+                strokeLinecap="round"
+              />
+              {/* Active scroll-drawn #FF5400 ribbon */}
+              <path
+                d="M 1180 20 C 780 60, 320 120, 480 210 C 640 300, 960 280, 620 390 C 340 480, 120 490, 20 520"
+                stroke="#FF5400"
+                strokeWidth="18"
+                strokeLinecap="round"
+                strokeDasharray="1650"
+                strokeDashoffset={Math.round(1650 * (1 - servicesPathRatio))}
+                style={{ transition: 'stroke-dashoffset 120ms ease-out' }}
+              />
+              {/* Two26 3D Orange Puck Badge at Start of Ribbon */}
+              <g transform="translate(1155, 8)">
+                <ellipse cx="18" cy="18" rx="14" ry="18" fill="#111111" />
+                <ellipse cx="14" cy="16" rx="14" ry="18" fill="#FF5400" stroke="#111111" strokeWidth="2.5" />
+              </g>
+            </svg>
 
+            <div className="relative z-10 space-y-6">
+              {SERVICE_RIBBON_ITEMS.map((item) => (
                 <div
-                  className="bg-[#F8EEE8] border-2 border-[#FF5400] rounded-full px-5 py-2.5 text-xs sm:text-sm font-medium text-[#FF5400] max-w-xl"
-                  style={{ transform: `rotate(${idx % 2 === 0 ? '-1deg' : '1deg'})` }}
+                  key={item.leftWord}
+                  className="two26-scroll-reveal is-visible rounded-[24px] bg-[#FBF6F3]/95 backdrop-blur-sm border border-[#DFCFC6] hover:border-[#FF5400] p-5 sm:p-7 flex flex-col lg:flex-row lg:items-center justify-between gap-4 transition-transform duration-200 hover:-translate-y-1"
                 >
-                  {item.pillText}
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="two26-display text-3xl sm:text-5xl text-[#FF5400]">
+                      {item.leftWord}
+                    </span>
+                    <span className="inline-flex items-center justify-center px-3.5 py-1 rounded-full bg-[#111111] text-[#FFFFFF] font-mono text-sm font-extrabold border-2 border-[#FF5400]">
+                      {item.badge}
+                    </span>
+                    <span className="two26-display text-3xl sm:text-5xl text-[#FF5400]">
+                      {item.rightWord}
+                    </span>
+                  </div>
+
+                  <div
+                    className="bg-[#F8EEE8] border-2 border-[#FF5400] rounded-full px-5 py-2.5 text-xs sm:text-sm font-medium text-[#FF5400] max-w-xl"
+                    style={{ transform: `rotate(${item.tilt})` }}
+                  >
+                    {item.pillText}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           {/* Interactive RICE / MoSCoW Scoring Lab */}
-          <div className="mt-12 rounded-[28px] bg-[#FFFFFF] border-2 border-[#111111] p-6 sm:p-10">
+          <div className="mt-14 rounded-[28px] bg-[#FFFFFF] border-2 border-[#111111] p-6 sm:p-10 two26-scroll-reveal is-visible">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#DFCFC6] pb-6">
               <div>
                 <div className="text-xs font-extrabold uppercase tracking-wider text-[#FF5400]">
@@ -1049,8 +1268,8 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* =====================================================================
-          SECTION 5: TWO26 ROUNDED #FF5400 STAGE ("APPARENTLY, PM TEAMS LIKE IT")
-          WITH ROTATED STACKED DECK OF #F8EEE8 CARDS
+          SECTION 5: TWO26 ROUNDED #FF5400 STAGE ("APPARENTLY, ENGINEERS LIKE PROOF")
+          WITH SPRING-SHUFFLED STACKED DECK & FAR-RIGHT VERTICAL DASH INDICATOR
          ===================================================================== */}
       <section id="step-mcp" className="desk-surface py-16 sm:py-24 px-4 sm:px-8">
         <div className="max-w-[1400px] mx-auto">
@@ -1070,6 +1289,24 @@ export const LandingPage: React.FC = () => {
 
           {/* Rounded #FF5400 Stage Container */}
           <div className="rounded-[32px] bg-[#FF5400] p-6 sm:p-12 lg:p-16 relative overflow-hidden">
+            {/* Two26 Far-Right Vertical Dash Progress Indicator */}
+            <div
+              className="hidden lg:flex flex-col items-center gap-3 absolute right-6 top-1/2 -translate-y-1/2 z-30"
+              aria-label="Deck progress indicator"
+            >
+              {[0, 1, 2].map((dIdx) => (
+                <button
+                  key={dIdx}
+                  type="button"
+                  onClick={() => setActiveDeckIdx(dIdx)}
+                  aria-label={`Select proof card ${dIdx + 1}`}
+                  className={`w-2 rounded-full transition-all duration-300 ${
+                    activeDeckIdx === dIdx ? 'h-10 bg-[#111111]' : 'h-5 bg-[#F8EEE8]/60 hover:bg-[#F8EEE8]'
+                  }`}
+                />
+              ))}
+            </div>
+
             {/* Top Deck Tab Controls */}
             <div className="flex flex-wrap items-center justify-between gap-3 mb-10 relative z-20">
               <div className="flex flex-wrap items-center gap-2">
@@ -1084,7 +1321,7 @@ export const LandingPage: React.FC = () => {
                     onClick={() => setActiveDeckIdx(t.idx)}
                     className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
                       activeDeckIdx === t.idx
-                        ? 'bg-[#111111] text-[#FFFFFF]'
+                        ? 'bg-[#111111] text-[#FFFFFF] scale-105'
                         : 'bg-[#F8EEE8] text-[#111111] hover:bg-[#111111] hover:text-[#FFFFFF]'
                     }`}
                   >
@@ -1113,20 +1350,26 @@ export const LandingPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Stacked Tilted #F8EEE8 Cards Deck */}
+            {/* Stacked Tilted #F8EEE8 Cards Deck with Animated Counter-Rotation */}
             <div className="relative max-w-4xl mx-auto my-4">
-              {/* Back decorative rotated cards */}
               <div
-                className="hidden sm:block absolute inset-0 rounded-[28px] bg-[#F8EEE8]/55 border border-[#111111]/10 pointer-events-none"
-                style={{ transform: 'rotate(-3.2deg) scale(0.98)' }}
+                className="hidden sm:block absolute inset-0 rounded-[28px] bg-[#F8EEE8]/55 border border-[#111111]/10 pointer-events-none transition-transform duration-500"
+                style={{
+                  transform: `rotate(${activeDeckIdx % 2 === 0 ? '-3.6deg' : '3.6deg'}) scale(0.975)`,
+                }}
               />
               <div
-                className="hidden sm:block absolute inset-0 rounded-[28px] bg-[#F8EEE8]/75 border border-[#111111]/10 pointer-events-none"
-                style={{ transform: 'rotate(2.4deg) scale(0.99)' }}
+                className="hidden sm:block absolute inset-0 rounded-[28px] bg-[#F8EEE8]/75 border border-[#111111]/10 pointer-events-none transition-transform duration-500"
+                style={{
+                  transform: `rotate(${activeDeckIdx % 2 === 0 ? '2.6deg' : '-2.6deg'}) scale(0.988)`,
+                }}
               />
 
-              {/* Active Front Card */}
-              <div className="relative z-10 rounded-[28px] bg-[#F8EEE8] border-2 border-[#111111] p-6 sm:p-10">
+              {/* Active Front Card with Spring Pop Keyframe on Tab Switch */}
+              <div
+                key={`deck-card-${activeDeckIdx}`}
+                className="relative z-10 rounded-[28px] bg-[#F8EEE8] border-2 border-[#111111] p-6 sm:p-10 two26-spring-pop"
+              >
                 {activeDeckIdx === 0 && (
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                     <div className="lg:col-span-5 space-y-3">
@@ -1275,7 +1518,7 @@ export const LandingPage: React.FC = () => {
 
       {/* =====================================================================
           SECTION 6: TWO26 CHAT-BUBBLE FAQ ("THINGS YOU MIGHT ASK")
-          WITH SLEEPING STUDIO CAT ILLUSTRATION & "26" AVATAR ANSWERS
+          WITH BOUNCING 3D ARROW ON SLEEPING CAT & SPRING-POP "26" AVATAR BUBBLES
          ===================================================================== */}
       <section id="faq-section" className="desk-surface py-20 sm:py-28 px-4 sm:px-8">
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -1289,7 +1532,7 @@ export const LandingPage: React.FC = () => {
               <span className="block">MIGHT ASK</span>
             </h2>
 
-            {/* Custom Sleeping Cat with 3D #FF5400 Arrow SVG (Two26 FAQ Homage) */}
+            {/* Custom Sleeping Cat with Animated Floating ZZZ & Bouncing 3D #FF5400 Arrow */}
             <div className="pt-4">
               <svg
                 viewBox="0 0 360 220"
@@ -1297,36 +1540,32 @@ export const LandingPage: React.FC = () => {
                 role="img"
                 aria-label="Sleeping studio cat illustration with orange arrow"
               >
-                {/* ZZZ */}
-                <text x="115" y="42" fontFamily="monospace" fontWeight="900" fontSize="18" fill="#111111">
-                  Z
-                </text>
-                <text x="132" y="30" fontFamily="monospace" fontWeight="900" fontSize="22" fill="#111111">
-                  Z
-                </text>
-                <text x="152" y="18" fontFamily="monospace" fontWeight="900" fontSize="26" fill="#111111">
-                  Z
-                </text>
-                {/* Sleeping Cat Body */}
+                <g className="two26-float-slow">
+                  <text x="115" y="42" fontFamily="monospace" fontWeight="900" fontSize="18" fill="#111111">
+                    Z
+                  </text>
+                  <text x="132" y="30" fontFamily="monospace" fontWeight="900" fontSize="22" fill="#111111">
+                    Z
+                  </text>
+                  <text x="152" y="18" fontFamily="monospace" fontWeight="900" fontSize="26" fill="#111111">
+                    Z
+                  </text>
+                </g>
                 <path
                   d="M65 145 C 45 110, 85 75, 130 95 C 175 85, 240 105, 255 150 C 260 185, 200 198, 135 190 C 85 192, 60 175, 65 145 Z"
                   fill="#FFFFFF"
                   stroke="#111111"
                   strokeWidth="3"
                 />
-                {/* Cat Ears & Markings */}
                 <path d="M62 110 L48 82 L78 92 Z" fill="#111111" />
                 <path d="M92 92 L104 68 L116 90 Z" fill="#111111" />
-                {/* Tail */}
                 <path
                   d="M254 162 C 295 162, 315 188, 305 202 C 295 212, 265 192, 246 182"
                   fill="#111111"
                 />
-                {/* Happy closed eyes */}
                 <path d="M78 122 Q86 130 94 122" stroke="#111111" strokeWidth="2.5" fill="none" />
                 <path d="M106 116 Q114 124 122 116" stroke="#111111" strokeWidth="2.5" fill="none" />
-                {/* Bold 3D #FF5400 Arrow pointing to belly */}
-                <g transform="translate(160, 48) rotate(16)">
+                <g className="two26-arrow-bounce">
                   <polygon
                     points="24,0 54,0 54,42 74,42 39,88 4,42 24,42"
                     fill="#111111"
@@ -1354,10 +1593,10 @@ export const LandingPage: React.FC = () => {
                     type="button"
                     onClick={() => setOpenFaqIdx(isOpen ? -1 : idx)}
                     aria-expanded={isOpen}
-                    className={`w-full text-left px-6 py-4 rounded-[24px] rounded-bl-none transition-all flex items-center justify-between gap-4 ${
+                    className={`w-full text-left px-6 py-4 rounded-[24px] rounded-bl-none transition-all duration-200 flex items-center justify-between gap-4 ${
                       isOpen
-                        ? 'bg-[#F3E5DE] border-2 border-[#FF5400] text-[#111111]'
-                        : 'bg-[#EADAD2] border border-transparent hover:border-[#FF5400]/50 text-[#111111]'
+                        ? 'bg-[#F3E5DE] border-2 border-[#FF5400] text-[#111111] translate-x-1'
+                        : 'bg-[#EADAD2] border border-transparent hover:border-[#FF5400]/50 hover:translate-x-1 text-[#111111]'
                     }`}
                   >
                     <span className="text-sm sm:text-base font-bold leading-snug">{item.q}</span>
@@ -1368,11 +1607,11 @@ export const LandingPage: React.FC = () => {
 
                   {/* Expanded Right-Aligned Answer Bubble + Circular #FF5400 "26" Avatar */}
                   {isOpen && (
-                    <div className="flex items-end justify-end gap-3 pl-6 sm:pl-16 cs-panel-enter">
+                    <div className="flex items-end justify-end gap-3 pl-6 sm:pl-16 two26-spring-pop">
                       <div className="rounded-[24px] rounded-br-none bg-[#FBF6F3] border border-[#DFCFC6] p-5 sm:p-6 text-sm leading-relaxed text-[#241F1C]">
                         {item.a}
                       </div>
-                      <span className="w-12 h-12 rounded-full bg-[#FF5400] text-[#FFFFFF] two26-display text-xl flex items-center justify-center shrink-0">
+                      <span className="w-12 h-12 rounded-full bg-[#FF5400] text-[#FFFFFF] two26-display text-xl flex items-center justify-center shrink-0 shadow-sm">
                         26
                       </span>
                     </div>
@@ -1400,6 +1639,8 @@ export const LandingPage: React.FC = () => {
           aria-hidden="true"
         >
           <path
+            className="two26-ribbon-pulse"
+            strokeDasharray="1800"
             d="M-80 120 C 320 -40, 520 460, 220 520 C -20 560, 140 180, 640 260 C 1080 320, 960 660, 1520 420"
             stroke="#D94600"
             strokeWidth="44"
@@ -1575,9 +1816,9 @@ export const LandingPage: React.FC = () => {
                 DIRECT STAGE LAUNCHER
               </div>
               <h2 className="two26-display text-[3.8rem] sm:text-[6.2rem] text-[#F8EEE8]">
-                <span className="block">WANT TO</span>
-                <span className="block">START A NEW</span>
-                <span className="block">PRODUCT SPEC?</span>
+                <span className="block two26-hero-line-1">WANT TO</span>
+                <span className="block two26-hero-line-2">START A NEW</span>
+                <span className="block two26-hero-line-3">PRODUCT SPEC?</span>
               </h2>
               <p className="text-lg font-medium text-[#F8EEE8]/85 max-w-md">
                 Jump straight into any stage of the 8-stage discovery pipeline or authenticate with Google OAuth.
@@ -1610,18 +1851,19 @@ export const LandingPage: React.FC = () => {
             </div>
 
             <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {STAGES.map((s) => (
+              {STAGES.map((s, idx) => (
                 <button
                   key={s.slug}
                   type="button"
                   onClick={() => openAppModule(s.slug)}
-                  className="text-left rounded-[20px] bg-[#F8EEE8] text-[#111111] p-4 hover:bg-[#111111] hover:text-[#FFFFFF] transition-colors flex items-center justify-between gap-3 group"
+                  style={{ animationDelay: `${idx * 40}ms` }}
+                  className="two26-spring-pop text-left rounded-[20px] bg-[#F8EEE8] text-[#111111] p-4 hover:bg-[#111111] hover:text-[#FFFFFF] transition-all hover:-translate-y-1 flex items-center justify-between gap-3 group"
                 >
                   <div>
                     <div className="text-[11px] font-mono font-bold text-[#FF5400]">STAGE {s.num}</div>
                     <div className="two26-display text-2xl mt-0.5">{s.title}</div>
                   </div>
-                  <span className="w-8 h-8 rounded-full bg-[#FF5400] text-white flex items-center justify-center shrink-0">
+                  <span className="w-8 h-8 rounded-full bg-[#FF5400] text-white flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform">
                     <ArrowUpRight className="w-4 h-4" />
                   </span>
                 </button>
